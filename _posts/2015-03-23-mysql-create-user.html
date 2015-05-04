@@ -21,38 +21,37 @@ tags: [mysql]
           <div class="blog-post">
             <h2 class="blog-post-title">新建用户并赋权限</h2>
             <p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
-				<div>1.用管理员账号登录MYSQL</div>
+			<div>1.用管理员账号登录MYSQL</div>
 
-				<div>&nbsp; <code>mysql -u root -p</code></div>
+			<div>&nbsp; <code>mysql -u root -p</code></div>
 
-				<div>2.创建一个新用户,用户名username,密码password</div>
+			<div>2.创建一个新用户,用户名username,密码password</div>
 
-				<div><code>&nbsp; insert into mysql.user(Host,User,Password) values(&#39;localhost&#39;,&#39;username&#39;,password(&#39;password&#39;));</code></div>
+			<div>&nbsp; <code>insert into mysql.user(Host,User,Password) values(&#39;localhost&#39;,&#39;username&#39;,password(&#39;password&#39;));</code></div>
 
-				<div>3.刷新系统权限表</div>
+			<div>3.刷新系统权限表</div>
 
-				<div>flush privileges;</div>
+			<div>&nbsp; <code>flush privileges;</code></div>
 
-				<div>4.赋予权限</div>
+			<div>4.赋予权限</div>
 
-				<div>a.赋予全部数据库所有操作权限</div>
+			<div>&nbsp; a.赋予全部数据库所有操作权限</div>
 
-				<div>grant all privileges on *.* to username@localhost identified by &#39;password&#39;;</div>
+			<div>&nbsp; &nbsp; <code>grant all privileges on *.* to username@localhost identified by &#39;password&#39;;</code></div>
 
-				<div>b.赋予abc数据库所有操作权限</div>
+			<div>&nbsp; b.赋予abc数据库所有操作权限</div>
 
-				<div>grant all privileges on abc.* to username@localhost identified by &#39;password&#39;;</div>
+			<div>&nbsp; &nbsp; <code>grant all privileges on abc.* to username@localhost identified by &#39;password&#39;;</code></div>
 
-				<div>c,赋予abc数据库查找更新的权限</div>
+			<div>&nbsp; c,赋予abc数据库查找更新的权限</div>
 
-				<div>grant select,update on abc.* to username@localhost identified by &#39;password&#39;;</div>
+			<div>&nbsp; &nbsp; <code>grant select,update on abc.* to username@localhost identified by &#39;password&#39;;</code></div>
 
-				<div>5.刷新系统权限表</div>
+			<div>5.刷新系统权限表</div>
 
-				<div>flush privileges;</div>
+			<div>&nbsp; <code>flush privileges;</code></div>
 
-				<div>end<span style="white-space:pre"><span style="white-space: normal;"> </span></span>新用户添加完成，权限设置完成</div>
-
+			<div>end<span style="white-space:pre"><span style="white-space: normal;"> </span></span>新用户添加完成，权限设置完成</div>
           </div><!-- /.blog-post -->
 
           <nav>
