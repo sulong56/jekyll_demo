@@ -16,7 +16,7 @@ keywords: 文章
 
 <div class="sidebar-module">
 <h4>Archives</h4>
-<ol class="list-unstyled">
+<ol class="dl-horizontal">
 	{% for post in site.posts %}
 	<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 	{% endfor %}
