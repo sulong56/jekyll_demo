@@ -5,15 +5,6 @@ description: 天启的Blog
 keywords: 文章
 ---
 
-<div class="blog-masthead">
-  <div class="container">
-	<nav class="blog-nav">
-	  <a class="blog-nav-item active" href="#">天启的Blog</a>
-	  <a class="blog-nav-item" href="#">关于</a>
-	</nav>
-  </div>
-</div>
-
 <div class="sidebar-module">
 <h4>Archives</h4>
 <ol class="dl-horizontal">
@@ -22,3 +13,39 @@ keywords: 文章
 	{% endfor %}
 </ol>
 </div>
+
+
+
+
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="page-header">
+				<h1>
+					天启的Blog
+				</h1>
+			</div>
+			<div class="row-fluid">
+				<div class="span8">
+
+					<p>
+						<strong><span class="marker"><samp><tt><q>新闻资讯 <a href="http://a.com">文章</a></q></tt></samp></span></strong>
+					</p>
+
+					{% for post in site.posts %}
+					<p><strong><span class="marker"><samp><tt><q>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></q></tt></samp></span></strong></p>
+					{% endfor %}
+				</div>
+				<div class="span4">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
