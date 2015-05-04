@@ -16,7 +16,7 @@ keywords: 文章
 			<div class="row-fluid">
 				<div class="col-sm-9 col-md-6 col-lg-8">
 					{% for post in site.posts %}
-					<h3><strong><samp><tt>{{ post.date | date:"%d/%m/%Y" }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></tt></samp></strong></h3>
+					<h3><strong><samp><tt>{{ post.date | date:"%Y-%m-%d" }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></tt></samp></strong></h3>
 					{% endfor %}
 				</div>
 				<div class="col-sm-3 col-md-6 col-lg-4">
@@ -47,4 +47,12 @@ keywords: 文章
 	</div>
 </div>
 
-
+{% for category in site.categories %}
+<h2>{{ category | first }}</h2>
+</span>{{ category | last | size }}</span>
+<ul class="arc-list">
+    {% for post in category.last %}
+        <li>{{ post.date | date:"%d/%m/%Y"}}<a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endfor %}
