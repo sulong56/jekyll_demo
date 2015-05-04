@@ -10,8 +10,8 @@ tags: [mysql]
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">The Bootstrap Blog</h1>
-        <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
+        <h1 class="blog-title">MYSQL中新建用户流程,及一些其他对用户操作</h1>
+        <p class="lead blog-description">完整的建立一个新用户以及赋予权限</p>
       </div>
 
       <div class="row">
@@ -19,36 +19,176 @@ tags: [mysql]
         <div class="col-sm-8 blog-main">
 
           <div class="blog-post">
-            <h2 class="blog-post-title">Sample blog post</h2>
-            <p class="blog-post-meta">{{ page.date | date_to_string }} by <a href="#">sulong56</a></p>
-
-            <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-            <hr>
-            <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-            <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <h2>Heading</h2>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            <pre><code>Example code block</code></pre>
-            <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <ul>
-              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-              <li>Donec id elit non mi porta gravida at eget metus.</li>
-              <li>Nulla vitae elit libero, a pharetra augue.</li>
-            </ul>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-            <ol>
-              <li>Vestibulum id ligula porta felis euismod semper.</li>
-              <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-              <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ol>
-            <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+            <h2 class="blog-post-title">新建用户并赋权限</h2>
+            <p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="page-header">
+				<h1>
+					MYSQL中新建用户流程,及一些其他对用户操作
+				</h1>
+			</div>
+			<h2>
+				完整的建立一个新用户以及赋予权限
+			</h2>
+			<table class="highlight tab-size-8 js-file-line-container">
+				<tbody>
+					<tr>
+						<td class="blob-code blob-code-inner js-file-line" id="LC9">
+							<div>
+								<table class="highlight tab-size-8 js-file-line-container">
+									<tbody>
+										<tr>
+											<td class="blob-code blob-code-inner js-file-line" id="LC8">
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L9">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC9">
+												<span class="pl-s1"><span class="pl-c">//1.用管理员账号登录MYSQL</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L10">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC10">
+												<span class="pl-s1"><span class="pl-c1">mysql</span> <span class="pl-k">-</span><span class="pl-c1">u</span> <span class="pl-c1">root</span> <span class="pl-k">-</span><span class="pl-c1">p</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L11">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC11">
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L12">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC12">
+												<span class="pl-s1"><span class="pl-c">//2.创建一个新用户,用户名username,密码password</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L13">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC13">
+												<span class="pl-s1"><span class="pl-c1">insert</span> <span class="pl-c1">into</span> <span class="pl-c1">mysql</span><span class="pl-k">.</span>user(<span class="pl-c1">Host</span>,<span class="pl-c1">User</span>,<span class="pl-c1">Password</span>) values(<span class="pl-s"><span class="pl-pds">'</span>localhost<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span>,password(<span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span>));</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L14">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC14">
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L15">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC15">
+												<span class="pl-s1"><span class="pl-c">//3.刷新系统权限表</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L16">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC16">
+												<span class="pl-s1"><span class="pl-c1">flush</span> <span class="pl-c1">privileges</span>;</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L17">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC17">
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L18">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC18">
+												<span class="pl-s1"><span class="pl-c">//4.赋予权限</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L19">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC19">
+												<span class="pl-s1"><span class="pl-c">//赋予全部数据库所有操作权限</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L20">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC20">
+												<span class="pl-s1"><span class="pl-c1">grant</span> <span class="pl-c1">all</span> <span class="pl-c1">privileges</span> <span class="pl-c1">on</span> <span class="pl-k">*</span><span class="pl-k">.</span><span class="pl-k">*</span> <span class="pl-c1">to</span> <span class="pl-c1">username</span><span class="pl-k">@</span><span class="pl-c1">localhost</span> <span class="pl-c1">identified</span> <span class="pl-c1">by</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span>;</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L21">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC21">
+												<span class="pl-s1"><span class="pl-c">//赋予abc数据库所有操作权限</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L22">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC22">
+												<span class="pl-s1"><span class="pl-c1">grant</span> <span class="pl-c1">all</span> <span class="pl-c1">privileges</span> <span class="pl-c1">on</span> <span class="pl-c1">abc</span><span class="pl-k">.</span><span class="pl-k">*</span> <span class="pl-c1">to</span> <span class="pl-c1">username</span><span class="pl-k">@</span><span class="pl-c1">localhost</span> <span class="pl-c1">identified</span> <span class="pl-c1">by</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span>;</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L23">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC23">
+												<span class="pl-s1"><span class="pl-c">//赋予abc数据库查找更新的权限</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L24">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC24">
+												<span class="pl-s1"><span class="pl-c1">grant</span> <span class="pl-c1">select</span>,<span class="pl-c1">update</span> <span class="pl-c1">on</span> <span class="pl-c1">abc</span><span class="pl-k">.</span><span class="pl-k">*</span> <span class="pl-c1">to</span> <span class="pl-c1">username</span><span class="pl-k">@</span><span class="pl-c1">localhost</span> <span class="pl-c1">identified</span> <span class="pl-c1">by</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span>;</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L25">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC25">
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L26">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC26">
+												<span class="pl-s1"><span class="pl-c">//5.刷新系统权限表</span></span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L27">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC27">
+												<span class="pl-s1"><span class="pl-c1">flush</span> <span class="pl-c1">privileges</span>;</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="blob-num js-line-number" id="L28">
+											</td>
+											<td class="blob-code blob-code-inner js-file-line" id="LC28">
+												<span class="pl-s1"><span class="pl-c">//end 新用户添加完成，权限设置完成</span></span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
           </div><!-- /.blog-post -->
 
           <nav>
