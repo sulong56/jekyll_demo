@@ -16,7 +16,7 @@ keywords: 文章
 			<div class="row-fluid">
 				<div class="col-sm-9 col-md-6 col-lg-8">
 					{% for post in site.posts %}
-					<h3><strong><samp><tt><q>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></q></tt></samp></strong></h3>
+					<p style="margin-left: 80px;"><big><span class="marker"><samp><tt><q>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}" target="_self">{{ post.title }}</a></q></tt></samp></span></big></p>
 					{% endfor %}
 				</div>
 				<div class="col-sm-3 col-md-6 col-lg-4">
