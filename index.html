@@ -1,11 +1,30 @@
 ---
 layout: default
 title: 天启的Blog
+description: 天启的Blog
+keywords: 文章
 ---
-<h2>{{ page.title }}</h2>
-<p>最新文章列表～</p>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="#">天启的Blog</a>
+          <a class="blog-nav-item" href="#">关于</a>
+        </nav>
+      </div>
+    </div>
+
+
 <ul>
 {% for post in site.posts %}
 <li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
 </ul>
+
+<div class="sidebar-module">
+<h4>Archives</h4>
+<ol class="list-unstyled">
+	{% for post in site.posts %}
+	<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+</ol>
+</div>
