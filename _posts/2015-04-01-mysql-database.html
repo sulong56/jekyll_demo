@@ -19,57 +19,40 @@ tags: [mysql]
 
   <div class="blog-post">
 	<h2 class="blog-post-title">一、数据库</h2>
-		<h3>
-			1.基础
-		</h3>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			数据库<span>(Database,DB):</span>按一定结构存储数据的仓库。<span></span>
-		</p>
-		<h3>
-			2.登录<span>/</span>退出<span>MySQL</span>
-		</h3>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			shell&gt;mysql -u用户名<span> -p</span>密码<span> -h</span>服务器名称<span> -D</span>数据库名称<span> -P</span>端口<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;exit; 或 <span>mysql&gt;quit; </span>或 <span>mysql&gt;\q;</span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			说明<span>:MySQL</span>命令必须以分号结尾<span></span>
-		</p>
-		<h3>
-			3.常用命令
-		</h3>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			查看当前日期时间<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;select now();
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			当前<span>MySQL</span>版本<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;select version();
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			查看当前用户<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;select user();
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			查看当前数据库<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;select database();
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			查看当前服务器下所有的数据库列表<span></span>
-		</p>
-		<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">
-			mysql&gt;show databases;
-		</p>
+
+	<h3>1.基础</h3>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">数据库<span>(Database,DB):</span>按一定结构存储数据的仓库。</p>
+
+	<h3>2.登录<span>/</span>退出<span>MySQL</span></h3>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql -u用户名<span> -p</span>密码<span> -h</span>服务器名称<span> -D</span>数据库名称<span> -P</span>端口</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;exit; </code>或 <code><span>mysql&gt;quit; </span></code>或 <code><span>mysql&gt;\q;</span></code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明<span>:MySQL</span>命令必须以分号结尾</p>
+
+	<h3>3.常用命令</h3>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前日期时间</p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select now();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">当前<span>MySQL</span>版本</p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select version();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前用户</p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select user();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前数据库</p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select database();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前服务器下所有的数据库列表</p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;show databases;</code></p>
 
   </div>
 
