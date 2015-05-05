@@ -37,7 +37,8 @@ tags: [mysql]
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">删除数据表</p>
 	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>DROP TABLE 表名;</code></p>
 	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>DROP TABLE IF EXISTS 表名;</code></p>
-
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明：删除没有被关联的普通表：直接上面的SQL语句就行了。</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">删除被其他表关联的父表：方法一：先删除子表，在删除父表; 方法二：删除父表的外键约束（上面有介绍），再删该表</p>
   </div>
 
   <div class="blog-post">
@@ -86,34 +87,50 @@ tags: [mysql]
 	<p style="margin-left: 40px;">D、自动编号的字段无需赋值。</p>
 
 	<h3>2.修改</h3>
-	<p style="margin-left: 40px;">添加单一字段</p>
+	<p style="margin-left: 40px;">数据表更名</p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 rename [to] 新名称&nbsp;<br />
+	rename table 旧名称 to 新名称,旧名称 to 新名称,...</code></p>
 
+	<p style="margin-left: 40px;">添加单一字段</p>
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 add [column] 列名称 列定义 [first|after 列名称]</code></p>
 
 	<p style="margin-left: 40px;">添加多个字段</p>
-
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 add [column] (列名称 列定义,...)</code></p>
 
 	<p style="margin-left: 40px;">删除字段</p>
-
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 drop [column] 列名称</code></p>
 
 	<p style="margin-left: 40px;">添加/删除默认值</p>
-
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 alter [column] 列名称 {set default 默认值 | drop default};</code></p>
 
 	<p style="margin-left: 40px;">仅修改列定义</p>
-
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 modify [column] 列名称 列定义 [first|after 列名称]</code></p>
 
 	<p style="margin-left: 40px;">修改列定义及列名称</p>
-
 	<p style="margin-left: 80px;"><code>alter table 数据表名称 change [column] 旧列名称 新列名称 列定义 [first|after 列名称]</code></p>
 
-	<p style="margin-left: 40px;">数据表更名</p>
+	<p style="margin-left: 40px;">修改字段的数据类型</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 MODIFY 属性名 数据类型;</code></p>
 
-	<p style="margin-left: 80px;"><code>alter table 数据表名称 rename [to] 新名称&nbsp;<br />
-	rename table 旧名称 to 新名称,旧名称 to 新名称,...</code></p>
+	<p style="margin-left: 40px;">修改字段名</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 CHANGE 旧属性名 新属性名 新数据类型;</code></p>
+
+	<p style="margin-left: 40px;">更改表的存储引擎</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 ENGINE = 存储引擎名;</code></p>
+
+	<p style="margin-left: 40px;">修改表的字符集</p>
+	<p style="margin-left: 80px;"><code>ALTER　TABLE 表名 CHARACTER SET UTF8;</code></p>
+  </div>
+
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">三、外键FOREIGN KEY </h2>
+	<h3>1.删除</h3>
+	<p style="margin-left: 40px;">删除表的外键约束</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 DROP FOREIGN KEY 外键别名;</code></p>
+
+	<h3>2.新增</h3>
+
 
   </div>
 
