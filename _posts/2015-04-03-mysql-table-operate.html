@@ -1,0 +1,82 @@
+---
+layout: default
+title: MYSQL 数据表 增删改查 连接 子查询
+description: mysql 数据表 增删改查 连接 子查询
+keywords: 数据表 增删改查 连接 子查询
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL 数据表 增删改查 连接 子查询</h1>
+<p class="lead blog-description">这些操作的具体命令</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+
+<div class="col-sm-12 blog-main">
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">一、查 SELECT</h2>
+
+	<h3>1.聚合函数</h3>
+	<p style="margin-left: 40px;">max,求最大值<br />
+	min,求最小值<br />
+	avg,求平均值<br />
+	sum,求和<br />
+	count,计数</p>
+
+
+	<h3>2.SELECT -- 查找记录</h3>
+
+	<p style="margin-left: 80px;">&nbsp;SELECT 表达式[,....] from&nbsp;数据表参照</p>
+
+	<p style="margin-left: 80px;">&nbsp; [where&nbsp; 条件]</p>
+
+	<p style="margin-left: 80px;">&nbsp; [group by 分组字段]</p>
+
+	<p style="margin-left: 80px;">&nbsp; [having 分组条件]</p>
+
+	<p style="margin-left: 80px;">&nbsp; [order by 排序字段[asc|desc][,...]]</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp;[limit [偏移值,]记录数目]</p>
+
+	<p style="margin-left: 80px;">说明:</p>
+
+	<p style="margin-left: 80px;">A、星号(*)表示所有字段</p>
+
+	<p style="margin-left: 80px;">B、字段&nbsp;[[as]别名]</p>
+
+	<p style="margin-left: 80px;">C、数据表&nbsp;[[as]&nbsp;别名]</p>
+
+	<p style="margin-left: 80px;">D、order by,对于查找结果进行排序，其中asc(默认)为升序，desc为降序。</p>
+
+	<p style="margin-left: 80px;">E、limit,限制返回的记录数,偏移值从0开始编号。</p>
+
+	<p style="margin-left: 80px;">F、分页时的偏移值的计算公式：(页码-1)*每页显示的记录数</p>
+
+	<h3 style="margin-left: 40px;">where条件</h3>
+
+	<p style="margin-left: 80px;">A.[not] between ... and</p>
+
+	<p style="margin-left: 80px;">字段名称&nbsp;[not] between ... and ...</p>
+
+	<p style="margin-left: 80px;">B.[not] in ...</p>
+
+	<p style="margin-left: 80px;">字段名称&nbsp;[not] in(值,....)</p>
+
+	<p style="margin-left: 80px;">C.[not] like &#39;表达式&#39;</p>
+
+	<p style="margin-left: 80px;">字段名称&nbsp;[not] like &#39;表达式&#39;</p>
+
+	<p style="margin-left: 80px;">D、逻辑运算符: not、and、or</p>
+  </div>
+
+
+
+
+
+</div>
+</div>
+
