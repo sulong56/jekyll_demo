@@ -73,10 +73,120 @@ tags: [mysql]
 	<p style="margin-left: 80px;">D、逻辑运算符: not、and、or</p>
   </div>
 
+  <div class="blog-post">
+	<h2 class="blog-post-title">二、删 DELETE</h2>
+	<h3 style="margin-left: 40px;">A.单表删除</h3>
+	<p style="margin-left: 80px;">&nbsp; delete from 数据表&nbsp;[where&nbsp;条件]</p>
+	<p style="margin-left: 80px;">&nbsp; [order by 排序字段[asc|desc][,...]]</p>
+	<p style="margin-left: 80px;">&nbsp; [limit 限制记录数目]</p>
+	<h3 style="margin-left: 40px;">B.多表删除</h3>
+	<p style="margin-left: 80px;">&nbsp; delete 数据表,... from&nbsp;数据表参照&nbsp;[where&nbsp;条件]</p>
 
+	<br/><p style="margin-left: 80px;">使用<code>TRUNCATE table_name</code>删除的表不能够回滚，但删除速度较快，</p>
+	<p style="margin-left: 80px;">使用<code>DELETE FROM table_name</code>删除的表可以回滚，删除速度相对较慢。</p>
+  </div>
 
+  <div class="blog-post">
+	<h2 class="blog-post-title">三、增 INSERT</h2>
+	<h3 style="margin-left: 40px;"><span style="color: inherit; font-family: inherit; font-size: 24.5px;">A.单表更新</span></h3>
+	<p style="margin-left: 80px;">&nbsp; update 数据表&nbsp;set&nbsp;字段名称=值,... [where&nbsp;条件]</p>
+	<p style="margin-left: 80px;">&nbsp; [order by 排序字段[asc|desc][,...]]</p>
+	<p style="margin-left: 80px;">&nbsp; [limit 限制记录数目]</p>
+	<h3 style="margin-left: 40px;">B.多表更新</h3>
+	<p style="margin-left: 80px;">&nbsp; update 数据表参照&nbsp;set&nbsp;字段名称=值,... [where&nbsp;条件]</p>
+	<p style="margin-left: 40px;">说明:</p>
+	<p style="margin-left: 40px;">A.如果省略字段列表，则必须为所有字段依次赋值。</p>
+	<p style="margin-left: 40px;">B.字段数目、顺序、数据类型必须与值的数目、顺序、数据类型完全匹配</p>
+  </div>
 
+  <div class="blog-post">
+	<h2 class="blog-post-title">四、改 UPDATE</h2>
+	<h3 style="margin-left: 40px;"><span style="color: inherit; font-family: inherit; font-size: 24.5px;">A.单表更新</span></h3>
+	<p style="margin-left: 80px;">&nbsp; update 数据表&nbsp;set&nbsp;字段名称=值,... [where&nbsp;条件]</p>
+	<p style="margin-left: 80px;">&nbsp; [order by 排序字段[asc|desc][,...]]</p>
+	<p style="margin-left: 80px;">&nbsp; [limit 限制记录数目]</p>
+	<h3 style="margin-left: 40px;">B.多表更新</h3>
+	<p style="margin-left: 80px;">&nbsp; update 数据表参照&nbsp;set&nbsp;字段名称=值,... [where&nbsp;条件]</p>
+	<p style="margin-left: 40px;">说明:</p>
+	<p style="margin-left: 80px;">如果省略where条件，将更新全部记录。</p>
+  </div>
 
+  <div class="blog-post">
+	<h2 class="blog-post-title">四、连接 JOIN</h2>
+	<p style="margin-left: 80px;">连接是外键约束的逆操作，可以将多张数据表的数据组合在一起来使用。</p>
+
+	<h2 style="margin-left: 40px;"><span style="color: inherit; font-family: inherit; font-size: 24.5px;">左外连接&nbsp;</span><span style="color: inherit; font-family: inherit; font-size: 24.5px;">left join</span></h2>
+
+	<p style="margin-left: 80px;">(显示左表的全部及右表中符合连接条件记录)</p>
+
+	<p style="margin-left: 80px;"><code>数据表&nbsp;left [outer] join&nbsp;数据表&nbsp;on&nbsp;连接条件</code></p>
+
+	<p style="margin-left: 80px;"><code>SELECT * FROM a LEFT JOIN &nbsp;b &nbsp;ON a.aID =b.bID&nbsp;</code></p>
+
+	<p style="margin-left: 80px;">left join是以A表的记录为基础的,A可以看成左表,B可以看成右表,left join是以左表为准的.&nbsp;<br />
+	换句话说,左表(A)的记录将会全部表示出来,而右表(B)只会显示符合搜索条件的记录(例子中为: A.aID = B.bID).<br />
+	B表记录不足的地方均为NULL.</p>
+
+	<h3 style="margin-left: 40px;">右外连接&nbsp;right join</h3>
+
+	<p style="margin-left: 80px;">(显示右表的全部及左表中符合连接条件记录)</p>
+
+	<p style="margin-left: 80px;"><code>数据表&nbsp;right [outer] join&nbsp;数据表&nbsp;on&nbsp;连接条件</code></p>
+
+	<h3 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); margin-left: 40px;">相等联接或内联接&nbsp;​inner join</h3>
+
+	<p style="margin-left: 80px;"><code>SELECT * &nbsp;FROM a,b WHERE a.aID = b.bID&nbsp;</code></p>
+
+	<p style="margin-left: 80px;">很明显,这里只显示出了 A.aID = B.bID的记录.这说明inner join并不以谁为基础,它只显示符合条件的记录.</p>
+
+	<p style="margin-left: 80px;">如果在INNER JOIN操作中要联接包含Memo 数据类型或 OLE Object 数据类型数据的字段，将会发生错误。</p>
+
+	<h3 style="margin-left: 40px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">语法汇总</h3>
+
+	<p style="margin-left: 40px;">​语法：<code>FROM table1 LEFT JOIN table2 ON table1.field1 compopr table2.field2 &nbsp;</code><br />
+	说明：table1, table2参数用于指定要将记录组合的表的名称。&nbsp;<br />
+	field1, field2参数指定被联接的字段的名称。且这些字段必须有相同的数据类型及包含相同类型的数据，但它们不需要有相同的&nbsp;<br />
+	名称。&nbsp;<br />
+	compopr参数指定关系比较运算符：&quot;=&quot;， &quot;&lt;&quot;， &quot;&gt;&quot;， &quot;&lt;=&quot;， &quot;&gt;=&quot; 或 &quot;&lt;&gt;&quot;。 &nbsp;</p>
+
+	<p>&nbsp;</p>
+
+	<p style="margin-left:10.5pt;">&nbsp;</p>
+
+	<p>​</p>
+  </div>
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">四、子查询 UPDATE</h2>
+	<h3 style="margin-left: 40px;">1.子查询</h3>
+
+	<p style="margin-left: 80px;">子查询是指出现在where子句中SELECT语句。</p>
+
+	<h3 style="margin-left: 40px;">2.引发子查询的情况</h3>
+
+	<p style="margin-left: 80px;">A、由[not] in引发的子查询</p>
+
+	<p style="margin-left: 80px;">B、由比较运算符引发的子查询</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; 如果子查询返回多个结果：</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; all，any(some)</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; &gt; &gt;= all --&gt; 子查询将取最大值</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; &gt; &gt;= any --&gt; 子查询将取最小值</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; = any --&gt; 等价于in</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; != all --&gt; 等价于not in</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; &lt;= &lt; all --&gt; 子查询将取最小值</p>
+
+	<p style="margin-left: 80px;">&nbsp;&nbsp; &lt;= &lt; some --&gt; 子查询将取最大值</p>
+
+	<p style="margin-left: 80px;">C、由[not]exists引发的子查询</p>
+  </div>
 </div>
 </div>
+
 
