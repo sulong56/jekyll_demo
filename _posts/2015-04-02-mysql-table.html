@@ -1,6 +1,6 @@
 ---
 layout: default
-title: MYSQL 数据表
+title: MYSQL 数据表命令，外键，存储引擎，复制表，临时表，数据类型
 description: mysql 数据表 建立 命令
 keywords: 新建数据表 简单命令
 category: mysql
@@ -8,7 +8,7 @@ tags: [mysql]
 ---
 
 <div class="blog-header">
-<h1 class="blog-title">MYSQL 数据表</h1>
+<h1 class="blog-title">MYSQL 数据表命令，外键，存储引擎，复制表，临时表，数据类型</h1>
 <p class="lead blog-description">MYSQL中新建新建数据表,及一些其他简单命令</p>
 <p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
 </div>
@@ -143,12 +143,20 @@ tags: [mysql]
 
   <div class="blog-post">
 	<h2 class="blog-post-title">四、存储引擎</h2>
-	<p style="margin-left: 40px;">表的外键约束可以在建表时设置也可以在建表完成后进行设置</p>
-	<p style="margin-left: 40px;">外键约束可以将减少数据表的体积，提高查询速度。逻辑外键是指在设计数据表时，数据表的某个字段的值要引用其他数据表中某个字段的值。</p>
+	<p style="margin-left: 40px;">存储引擎就是指表的类型，数据库存储引擎决定了表在计算机的存储方式。</p>
+	<p style="margin-left: 40px;">MySQL 数据表主要支持六种类型 ，分别是：BDB、HEAP、ISAM、MERGE、MYISAM、InnoBDB。</p>
+	<p style="margin-left: 40px;">这六种又分为两类，一类是“事务安全型”(transaction-safe)，包括BDB和InnoDB；其余都属于第二类，称为”非事务安全型”(non-transaction-safe)。</p>
+	<p style="margin-left: 40px;">存储引擎说白了就是如何存储数据、如何为存储的数据建立索引和如何更新、查询数据等技术的实现方法。因为在关系数据库中数据的存储是以表的形式存储的，所以存储引擎也可以称为表类型（即存储和操作此表的类型）。</p>
 
-	<h3>1.删除</h3>
-	<p style="margin-left: 40px;">删除表的外键约束</p>
-	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 DROP FOREIGN KEY 外键别名;</code></p>
+	<br/><p style="margin-left: 40px;">InnoDB 是较新的事务安全型存储引擎，用于事务处理应用程序，支持BDB的几乎所有特性，并具有众多新特性，包括ACID事务支持。</p>
+	<p style="margin-left: 40px;">特性：事务处理机制  支持外链  崩溃后能立即恢复  支持外键功能，级联删除  支持并发能力  在硬盘上的存储方式：InnoBDB frm</p>
+	<p style="margin-left: 40px;">InnoDB是MySQL上第一个提供外键约束的表引擎，而且对事务处理的能力，也是其他存储引擎不能比拟的。不过这种引擎的缺点就是读写效率稍差，占用的数据空间相对比较大。</p>
+
+	<br/><p style="margin-left: 40px;">MyISAM 默认的MySQL插件式存储引擎，它是基于ISAM类型，但它增加了许多有用的扩展，它是在Web、数据仓储和其他应用环境下最常使用的存储引擎之一。注意，通过更改STORAGE_ENGINE配置变量，能够方便地更改MySQL服务器的默认存储引擎。</p> 
+	<p style="margin-left: 40px;">优点：1.比ISAM表更小，所占资源更少  2.可以在不同平台间二进制移植表的类型在创建表时指定。</p> 
+
+	<br/><p style="margin-left: 40px;">MySQL中查询存储引擎的类型命令：</p>
+	<p style="margin-left: 80px;"><code>SHOW ENGINES;</code></p>
   </div>
 
   <div class="blog-post">
@@ -159,7 +167,7 @@ tags: [mysql]
   </div>
 
   <div class="blog-post">
-	<h2 class="blog-post-title">六、创建临时表</h2>
+	<h2 class="blog-post-title">六、临时表</h2>
 	<p style="margin-left: 40px;">有的时候，当工作在非常大的表上时，可能偶尔需要运行很多查询获得一个大量数据的小的子集，不是对整个表运行这些查询，而是让MySQL每次找出所需的少数记录，将记录保存到一个临时表可能更快一些，然后对这些临时表进行查询操作。可以通过使用temporary关键字和create table语句来实现。</p>
 	<p style="margin-left: 40px;">临时表的创建与其它表一样，只是它们存储在操作系统指定的临时目录中。临时表将在你连接MySQL期间存在，当你断开时，MySQL将自动删除表并释放所有的内存空间；当然了，你也可以手动的使用drop table命令删除临时表。</p>
 	<p style="margin-left: 40px;">您必须拥有CREATE TEMPORARY TABLES权限，才能创建临时表。</p><br/>
@@ -168,7 +176,7 @@ tags: [mysql]
 	<p style="margin-left: 80px;"><code>  CREATE TEMPORARY TABLE tmp_table ( 
       name VARCHAR(10) NOT NULL, 
       value INTEGER NOT NULL 
-  )</code></p>
+	)</code></p>
 
 	<p style="margin-left: 40px;">直接将查询结果导入临时表</p>
 	<p style="margin-left: 80px;"><code>create temporary table 临时表名 select * from 检索的表;</code></p>
@@ -177,7 +185,61 @@ tags: [mysql]
 	<p style="margin-left: 80px;"><code>  CREATE TEMPORARY TABLE tmp_table ( 
      name VARCHAR(10) NOT NULL, 
      value INTEGER NOT NULL 
-  ) TYPE = HEAP </code></p>
+	 ) TYPE = HEAP </code></p>
+  </div>
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">七、数据类型</h2>
+	<p style="margin-left: 40px;">用于数据表字段的约束</p>
+	<h3>1.整型</h3>
+
+	<p><strong>tinyint [unsigned | zerofill],</strong><strong>占1字节:</strong></p>
+
+	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 255</p>
+
+	<p>&nbsp;&nbsp; 有符号位的存储范围为-128~127</p>
+
+	<p><strong>smallint [unsigned | zerofill],</strong><strong>占2字节:</strong></p>
+
+	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 65535</p>
+
+	<p>&nbsp;&nbsp; 有符号位的存储范围为-32768 ~ 32767</p>
+
+	<p><strong>mediumint [unsigned | zerofill],</strong><strong>占3字节:</strong></p>
+
+	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 16777215</p>
+
+	<p>&nbsp;&nbsp; 有符号位的存储范围为-8388608 ~ 8388607</p>
+
+	<p><strong>int [unsigned | zerofill],</strong><strong>占4字节:</strong></p>
+
+	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 4294967295</p>
+
+	<p>&nbsp;&nbsp; 有符号位的存储范围为-2147483648 ~ 2147483647</p>
+
+	<p><strong>bigint [unsigned | zerofill],</strong><strong>占8字节:</strong></p>
+
+	<p>boolean,等价于tinyint(1),0为假，其余为真。</p>
+
+	<h3>2.浮点型</h3>
+
+	<p>float[(m[,p])][unsigned | zerofill], 3.4E38</p>
+
+	<p>double[(m[,p])][unsigned | zerofill], 1.79E308</p>
+
+	<h3>3.字符型</h3>
+
+	<p>char(n),定长的字符,N的最大范围为255。</p>
+
+	<p>varchar(n),变长的字符,N的最大范围为65535。</p>
+
+	<p>tinytext,最多为255个字符</p>
+
+	<p>text,最多为65535个字符</p>
+
+	<p>mediumtext,最多为16777215个字符</p>
+
+	<p>enum:枚举,最多为65535个值。</p>
   </div>
 
 </div>
