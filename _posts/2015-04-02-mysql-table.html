@@ -137,7 +137,52 @@ tags: [mysql]
 	<p style="margin-left: 80px;"><code>CONSTRAINT 外键别名 FOREIGN KEY(属性1,属性2,....属性n) REFERENCES 表名(属性1',属性2',...属性n')</code></p>
 
 	<p style="margin-left: 40px;">建表完成后设置表的外键</p>
-	<p style="margin-left: 80px;"><code>ALTER TABLE `child` ADD CONSTRAINT  `child_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON UPDATE CASCADE ON DELETE CASCADE</code></p>
+	<p style="margin-left: 80px;"><code>alter table 表名 add constraint FK_ID foreign key(你的外键字段名) REFERENCES 外表表名(对应的表的主键字段名);</code></p>
+	<p style="margin-left: 80px;">例: <code>alter table tb_active add constraint FK_ID foreign key(user_id) REFERENCES tb_user(id)</code></p><br/>
+
+	<div style="word-wrap: break-word; color: rgb(102, 102, 102); font-family: 宋体, Arial; font-size: 16px; line-height: 26px; widows: 1; margin-left: 40px;"><b style="word-wrap: break-word;">定义父表与子表直接的关系</b></div>
+
+	<div style="word-wrap: break-word; color: rgb(102, 102, 102); font-family: 宋体, Arial; font-size: 16px; line-height: 26px; widows: 1;">
+	<div style="word-wrap: break-word;">
+	<div style="word-wrap: break-word; margin-left: 40px;">&nbsp;</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>CREATE TABLE `parent` (</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; `id` INT(11) NOT NULL,</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; PRIMARY KEY (`id`)</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>) ENGINE=INNODB DEFAULT CHARSET=utf8</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;">&nbsp;</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>CREATE TABLE `child` (</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; `id` INT(11) DEFAULT NULL,</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; `parent_id` INT(11) DEFAULT NULL,</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; KEY `par_ind` (`parent_id`),</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>&nbsp; CONSTRAINT `child_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`)&nbsp;<b style="word-wrap: break-word;">ON DELETE&nbsp;<font color="#f00000" style="word-wrap: break-word;">RESTRICT&nbsp;</font>ON UPDATE&nbsp;<font color="#f00000" style="word-wrap: break-word;">CASCADE</font></b></code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><code>) ENGINE=INNODB DEFAULT CHARSET=utf8</code></div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;">&nbsp;</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><b style="word-wrap: break-word;"><font color="#f00000" style="word-wrap: break-word;">CASCADE</font></b>：当父表发生DELETE或UPDATE操作时，相应子表中的数据也被DELETE或UPDATE</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><b style="word-wrap: break-word;"><font color="#f00000" style="word-wrap: break-word;">SET NULL</font></b>：当父表发生DELETE或UPDATE操作时，相应的子表中的数据被更新为NULL。当然子表中相应的列必须允许NULL值</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><b style="word-wrap: break-word;"><font color="#f00000" style="word-wrap: break-word;">ON ACTION</font></b>：当父表发生DELETE或UPDATE操作时，抛出错误，不允许这类操作发生</div>
+
+	<div style="word-wrap: break-word; margin-left: 40px;"><font color="#f00000" style="word-wrap: break-word;"><b style="word-wrap: break-word;">RESTRICT</b></font>：当父表发生DELETE或UPDATE操作时，抛出错误，不允许这类操作发生.如果定义外键时没有指定ON DELETE或ON UPDATE,这就是默认的外键设置</div>
+	</div>
+	</div>
+
+	<div style="word-wrap: break-word; color: rgb(102, 102, 102); font-family: 宋体, Arial; font-size: 16px; line-height: 26px; widows: 1;">&nbsp;</div>
+
+
 
   </div>
 
@@ -191,57 +236,95 @@ tags: [mysql]
   <div class="blog-post">
 	<h2 class="blog-post-title">七、数据类型</h2>
 	<p style="margin-left: 40px;">用于数据表字段的约束</p>
-	<h3>1.整型</h3>
+	<h3 style="margin-left: 40px;">1.整型</h3>
 
-	<p><strong>tinyint [unsigned | zerofill],</strong><strong>占1字节:</strong></p>
+	<p style="margin-left: 40px;"><strong>tinyint [unsigned | zerofill],</strong><strong>占1字节:</strong></p>
 
-	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 255</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 无符号位的存储范围为0 ~ 255</p>
 
-	<p>&nbsp;&nbsp; 有符号位的存储范围为-128~127</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 有符号位的存储范围为-128~127</p>
 
-	<p><strong>smallint [unsigned | zerofill],</strong><strong>占2字节:</strong></p>
+	<p style="margin-left: 40px;"><strong>smallint [unsigned | zerofill],</strong><strong>占2字节:</strong></p>
 
-	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 65535</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 无符号位的存储范围为0 ~ 65535</p>
 
-	<p>&nbsp;&nbsp; 有符号位的存储范围为-32768 ~ 32767</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 有符号位的存储范围为-32768 ~ 32767</p>
 
-	<p><strong>mediumint [unsigned | zerofill],</strong><strong>占3字节:</strong></p>
+	<p style="margin-left: 40px;"><strong>mediumint [unsigned | zerofill],</strong><strong>占3字节:</strong></p>
 
-	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 16777215</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 无符号位的存储范围为0 ~ 16777215</p>
 
-	<p>&nbsp;&nbsp; 有符号位的存储范围为-8388608 ~ 8388607</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 有符号位的存储范围为-8388608 ~ 8388607</p>
 
-	<p><strong>int [unsigned | zerofill],</strong><strong>占4字节:</strong></p>
+	<p style="margin-left: 40px;"><strong>int [unsigned | zerofill],</strong><strong>占4字节:</strong></p>
 
-	<p>&nbsp;&nbsp; 无符号位的存储范围为0 ~ 4294967295</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 无符号位的存储范围为0 ~ 4294967295</p>
 
-	<p>&nbsp;&nbsp; 有符号位的存储范围为-2147483648 ~ 2147483647</p>
+	<p style="margin-left: 40px;">&nbsp;&nbsp; 有符号位的存储范围为-2147483648 ~ 2147483647</p>
 
-	<p><strong>bigint [unsigned | zerofill],</strong><strong>占8字节:</strong></p>
+	<p style="margin-left: 40px;"><strong>bigint [unsigned | zerofill],</strong><strong>占8字节:</strong></p>
 
-	<p>boolean,等价于tinyint(1),0为假，其余为真。</p>
+	<p style="margin-left: 40px;">boolean,等价于tinyint(1),0为假，其余为真。</p>
 
-	<h3>2.浮点型</h3>
+	<h3 style="margin-left: 40px;">2.浮点型</h3>
 
-	<p>float[(m[,p])][unsigned | zerofill], 3.4E38</p>
+	<p style="margin-left: 40px;">float[(m[,p])][unsigned | zerofill], 3.4E38</p>
 
-	<p>double[(m[,p])][unsigned | zerofill], 1.79E308</p>
+	<p style="margin-left: 40px;">double[(m[,p])][unsigned | zerofill], 1.79E308</p>
 
-	<h3>3.字符型</h3>
+	<h3 style="margin-left: 40px;">3.字符型</h3>
 
-	<p>char(n),定长的字符,N的最大范围为255。</p>
+	<p style="margin-left: 40px;">char(n),定长的字符,N的最大范围为255。</p>
 
-	<p>varchar(n),变长的字符,N的最大范围为65535。</p>
+	<p style="margin-left: 40px;">varchar(n),变长的字符,N的最大范围为65535。</p>
 
-	<p>tinytext,最多为255个字符</p>
+	<p style="margin-left: 40px;">tinytext,最多为255个字符</p>
 
-	<p>text,最多为65535个字符</p>
+	<p style="margin-left: 40px;">text,最多为65535个字符</p>
 
-	<p>mediumtext,最多为16777215个字符</p>
+	<p style="margin-left: 40px;">mediumtext,最多为16777215个字符</p>
 
-	<p>enum:枚举,最多为65535个值。</p>
+	<p style="margin-left: 40px;">enum:枚举,最多为65535个值。</p>
   </div>
 
+  <div class="blog-post">
+	<h2 class="blog-post-title">八、一段建表语句</h2>
+	<div style="margin-left: 40px;"><code>CREATE TABLE order(</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;order_id &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int(10) unsigned NOT NULL AUTO_INCREMENT,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;discount_price<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; decimal(10,2) NOT NULL DEFAULT 0.00,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;window<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; varchar(255) NOT NULL DEFAULT &#39;&#39;,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;discount_point<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; decimal(4,2) NOT NULL DEFAULT 1.00,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;order_price<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; decimal(10,2) NOT NULL DEFAULT 0.00,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;order_num<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; varchar(255) NOT NULL DEFAULT &#39;&#39;,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;card_num &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;varchar(255) NOT NULL DEFAULT 0,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;card_type &nbsp; &nbsp; &nbsp; &nbsp; tinyint(1) unsigned NOT NULL DEFAULT 0,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;merchant_id<span style="white-space:pre"><span style="white-space: normal;"> </span></span> &nbsp; int(10) NOT NULL DEFAULT 0,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;is_destory &nbsp; &nbsp; &nbsp; &nbsp;tinyint(1) unsigned NOT NULL DEFAULT 1,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;is_print &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tinyint(1) unsigned NOT NULL DEFAULT 0,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;add_time &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;datetime NOT NULL DEFAULT &#39;0000-00-00 00:00:00&#39;,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;print_time &nbsp; &nbsp; &nbsp; &nbsp;datetime NOT NULL DEFAULT &#39;0000-00-00 00:00:00&#39;,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;opeation &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;varchar(255) NOT NULL DEFAULT &#39;&#39;,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;is_rebates &nbsp; &nbsp; &nbsp; &nbsp;tinyint(1) unsigned NOT NULL DEFAULT 0,</code></div>
+
+	<div style="margin-left: 40px;"><code>&nbsp;PRIMARY KEY (order_id)</code></div>
+
+	<div style="margin-left: 40px;"><code>)ENGINE=InnoDB &nbsp;DEFAULT CHARSET=UTF8;</code></div>
+  </div>
 </div>
 </div>
 
