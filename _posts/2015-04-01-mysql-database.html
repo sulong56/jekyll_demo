@@ -22,92 +22,89 @@ tags: [mysql]
 
 	<h3>1.基础</h3>
 
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">数据库<span>(Database,DB):</span>按一定结构存储数据的仓库。</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">数据库<span>(Database,DB):</span>数据库指的是以一定方式储存在一起、能为多个用户共享、具有尽可能小的冗余度的特点、是与应用程序彼此独立的数据集合。</p>
 
 	<h3>2.登录<span>/</span>退出<span>MySQL</span></h3>
 
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql -u用户名<span> -p</span>密码<span> -h</span>服务器名称<span> -D</span>数据库名称<span> -P</span>端口</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;exit; </code>或 <code><span>mysql&gt;quit; </span></code>或 <code><span>mysql&gt;\q;</span></code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明<span>:MySQL</span>命令必须以分号结尾</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysql -u用户名<span> -p</span>密码<span> -h</span>服务器名称<span> -D</span>数据库名称<span> -P</span>端口</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysql&gt;exit; </code>或 <code><span>mysql&gt;quit; </span></code>或 <code><span>mysql&gt;\q;</span></code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明<span>:MySQL</span>命令必须以分号结尾</p>
 
 	<h3>3.常用命令</h3>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">当前<span>MySQL</span>版本</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;SELECT version();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysql&gt;SELECT version();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前用户</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;SELECT user();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysql&gt;SELECT user();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前日期时间</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT now();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>SELECT now();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前的日期</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT CURDATE();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>SELECT CURDATE();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前的时间</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT CURTIME();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>SELECT CURTIME();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">向日期添加指定的时间间隔</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>DATE_ADD(date,INTERVAL expr type)</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:date 参数是合法的日期表达式。expr 参数是您希望添加的时间间隔。type 参数可以是下列值：YEAR(年) DAY(日) HOUR(小时) MINUTE(分钟) SECOND(秒) MICROSECOND(微秒) ... </p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查找中使用了: SELECT OrderId,DATE_ADD(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>DATE_ADD(date,INTERVAL expr type)</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明:date 参数是合法的日期表达式。expr 参数是您希望添加的时间间隔。type 参数可以是下列值：YEAR(年) DAY(日) HOUR(小时) MINUTE(分钟) SECOND(秒) MICROSECOND(微秒) ...</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">查找中使用了: SELECT OrderId,DATE_ADD(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">从日期减去指定的时间间隔</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>DATE_SUB(date,INTERVAL expr type)</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:date 参数是合法的日期表达式。expr 参数是您希望添加的时间间隔。type 参数可以是下列值：YEAR(年) DAY(日) HOUR(小时) MINUTE(分钟) SECOND(秒) MICROSECOND(微秒) ... </p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查找中使用了: SELECT OrderId,DATE_SUB(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>DATE_SUB(date,INTERVAL expr type)</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明:date 参数是合法的日期表达式。expr 参数是您希望添加的时间间隔。type 参数可以是下列值：YEAR(年) DAY(日) HOUR(小时) MINUTE(分钟) SECOND(秒) MICROSECOND(微秒) ...</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">查找中使用了: SELECT OrderId,DATE_SUB(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">返回两个日期之间的天数</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>DATEDIFF(date1,date2)</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:date1 和 date2 参数是合法的日期或日期/时间表达式。</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查找中使用了: SELECT DATEDIFF('2008-12-30','2008-12-29') AS DiffDate</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>DATEDIFF(date1,date2)</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明:date1 和 date2 参数是合法的日期或日期/时间表达式。</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">查找中使用了: SELECT DATEDIFF(&#39;2008-12-30&#39;,&#39;2008-12-29&#39;) AS DiffDate</p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看MySQL当前用户占用的连接数</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>show processlist;</code></p>
-
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>show processlist;</code></p>
   </div>
 
   <div class="blog-post">
 	<h2 class="blog-post-title">二、MYSQL对数据库操作</h2>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前数据库</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT database();</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>SELECT database();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前服务器下所有的数据库列表</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>show databases;</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>show databases;</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">创建数据库</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>create database [if not exists] 数据库名称  [[default] character set '编码方式']</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>create database [if not exists] 数据库名称 [[default] character set &#39;编码方式&#39;]</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看数据库的创建命令</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>show create database 数据库名称</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>show create database 数据库名称</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">修改数据库编码方式</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>alter database 数据库名称 [default] character set '编码方式'</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>alter database 数据库名称 [default] character set &#39;编码方式&#39;</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">删除数据库</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>drop database [if exists] 数据库名称</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>drop database [if exists] 数据库名称</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">打开数据库</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>use 数据库名称</code></p>
-
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>use 数据库名称</code></p>
   </div>
 
   <div class="blog-post">
 	<h2 class="blog-post-title">三、数据的备份与恢复</h2>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">导出数据库</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysqldump --databases db1 db2 > db1.db2.sql</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:将数据库dbl和db2备份到db1.db2.sql文件，db1.db2.sql是一个文本文件，文件名任取。</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysqldump --databases db1 db2 &gt; db1.db2.sql</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明:将数据库dbl和db2备份到db1.db2.sql文件，db1.db2.sql是一个文本文件，文件名任取。</p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">导出表</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysqldump --opt school abc > school.sql</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:将数据库school中的abc表备份到school.sql文件，school.sql是一个文本文件，文件名任取。</p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>mysqldump --opt school abc &gt; school.sql</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;">说明:将数据库school中的abc表备份到school.sql文件，school.sql是一个文本文件，文件名任取。</p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">导入数据库，数据表</p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>use 数据库名称;</code></p>
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SOURCE 之前导出的数据库文件完全路径;</code></p>
-
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>use 数据库名称;</code></p>
+	<p class="MsoNormal" style="margin-left: 40px; text-indent: 10.5pt;"><code>SOURCE 之前导出的数据库文件完全路径;</code></p>
   </div>
 </div>
 </div>
