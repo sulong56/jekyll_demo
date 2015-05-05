@@ -125,13 +125,59 @@ tags: [mysql]
 
   <div class="blog-post">
 	<h2 class="blog-post-title">三、外键FOREIGN KEY </h2>
+	<p style="margin-left: 40px;">表的外键约束可以在建表时设置也可以在建表完成后进行设置</p>
+	<p style="margin-left: 40px;">外键约束可以将减少数据表的体积，提高查询速度。逻辑外键是指在设计数据表时，数据表的某个字段的值要引用其他数据表中某个字段的值。</p>
+
 	<h3>1.删除</h3>
 	<p style="margin-left: 40px;">删除表的外键约束</p>
 	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 DROP FOREIGN KEY 外键别名;</code></p>
 
 	<h3>2.新增</h3>
+	<p style="margin-left: 40px;">建表时设置表的外键</p>
+	<p style="margin-left: 80px;"><code>CONSTRAINT 外键别名 FOREIGN KEY(属性1,属性2,....属性n) REFERENCES 表名(属性1',属性2',...属性n')</code></p>
 
+	<p style="margin-left: 40px;">建表完成后设置表的外键</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE `child` ADD CONSTRAINT  `child_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON UPDATE CASCADE ON DELETE CASCADE</code></p>
 
+  </div>
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">四、存储引擎</h2>
+	<p style="margin-left: 40px;">表的外键约束可以在建表时设置也可以在建表完成后进行设置</p>
+	<p style="margin-left: 40px;">外键约束可以将减少数据表的体积，提高查询速度。逻辑外键是指在设计数据表时，数据表的某个字段的值要引用其他数据表中某个字段的值。</p>
+
+	<h3>1.删除</h3>
+	<p style="margin-left: 40px;">删除表的外键约束</p>
+	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 DROP FOREIGN KEY 外键别名;</code></p>
+  </div>
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">五、复制表</h2>
+	<p style="margin-left: 40px;">基于现有的表创建新表是一项很容易的任务。</p>
+	<p style="margin-left: 40px;">以下代码将得到tb_test表的一个副本，名为tb_test2:</p>
+	<p style="margin-left: 80px;"><code>create table tb_test2 select * from db_test.tb_test;</code></p>
+  </div>
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">六、创建临时表</h2>
+	<p style="margin-left: 40px;">有的时候，当工作在非常大的表上时，可能偶尔需要运行很多查询获得一个大量数据的小的子集，不是对整个表运行这些查询，而是让MySQL每次找出所需的少数记录，将记录保存到一个临时表可能更快一些，然后对这些临时表进行查询操作。可以通过使用temporary关键字和create table语句来实现。</p>
+	<p style="margin-left: 40px;">临时表的创建与其它表一样，只是它们存储在操作系统指定的临时目录中。临时表将在你连接MySQL期间存在，当你断开时，MySQL将自动删除表并释放所有的内存空间；当然了，你也可以手动的使用drop table命令删除临时表。</p>
+	<p style="margin-left: 40px;">您必须拥有CREATE TEMPORARY TABLES权限，才能创建临时表。</p><br/>
+
+	<p style="margin-left: 40px;">定义临时表举例</p>
+	<p style="margin-left: 80px;"><code>  CREATE TEMPORARY TABLE tmp_table ( 
+      name VARCHAR(10) NOT NULL, 
+      value INTEGER NOT NULL 
+  )</code></p>
+
+	<p style="margin-left: 40px;">直接将查询结果导入临时表</p>
+	<p style="margin-left: 80px;"><code>create temporary table 临时表名 select * from 检索的表;</code></p>
+
+	<p style="margin-left: 40px;">另外mysql也允许你在内存中直接创建临时表，因为是在内存中所有速度会很快，语法如下</p>
+	<p style="margin-left: 80px;"><code>  CREATE TEMPORARY TABLE tmp_table ( 
+     name VARCHAR(10) NOT NULL, 
+     value INTEGER NOT NULL 
+  ) TYPE = HEAP </code></p>
   </div>
 
 </div>
