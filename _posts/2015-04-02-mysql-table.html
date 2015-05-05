@@ -127,7 +127,7 @@ tags: [mysql]
 	<h2 class="blog-post-title">三、外键FOREIGN KEY </h2>
 	<p style="margin-left: 40px;">表的外键约束可以在建表时设置也可以在建表完成后进行设置</p>
 	<p style="margin-left: 40px;">外键约束可以将减少数据表的体积，提高查询速度。逻辑外键是指在设计数据表时，数据表的某个字段的值要引用其他数据表中某个字段的值。</p>
-
+	<p style="margin-left: 40px;">所有tables必须是InnoDB型 ，它们不能是临时表。<br/>在引用表中，必须有一个索引，外键列以同样的顺序被列在其中作为第一列。这样一个索引如果不存在，它必须在引用表里被自动创建。<br/>在引用表中，必须有一个索引，被引用的列以同样的顺序被列在其中作为第一列。<br/>不支持对外键列的索引前缀。这样的后果之一是BLOB和TEXT列不被包括在一个外键中， 这是因为对这些列的索引必须总是包含一个前缀长度。</p>
 	<h3>1.删除</h3>
 	<p style="margin-left: 40px;">删除表的外键约束</p>
 	<p style="margin-left: 80px;"><code>ALTER TABLE 表名 DROP FOREIGN KEY 外键别名;</code></p>
