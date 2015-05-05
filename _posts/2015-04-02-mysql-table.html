@@ -43,77 +43,76 @@ tags: [mysql]
   <div class="blog-post">
 	<h2 class="blog-post-title">二、数据表新增，修改</h2>
 	<h3>1.新增</h3>
+	<p style="margin-left: 40px;">create table [if not exists] 数据表名称(</p>
 
-	<p>create table [if not exists] 数据表名称(</p>
+	<p style="margin-left: 40px;">&nbsp; 列名称 数据类型 [[null | not null] | default 默认值 | auto_increment | [primary | unique key]],</p>
 
-	<p>&nbsp; 列名称 数据类型 [[null | not null] | default 默认值 | auto_increment | [primary | unique key]],</p>
+	<p style="margin-left: 40px;">&nbsp; .....</p>
 
-	<p>&nbsp; .....</p>
+	<p style="margin-left: 40px;">)</p>
 
-	<p>)</p>
+	<p style="margin-left: 80px;">null : 允许为空</p>
 
-	<p style="margin-left:10.5pt;">null : 允许为空</p>
+	<p style="margin-left: 80px;">not null : 不允许为空</p>
 
-	<p style="margin-left:10.5pt;">not null : 不允许为空</p>
+	<p style="margin-left: 80px;"><strong>default:</strong></p>
 
-	<p style="margin-left:10.5pt;"><strong>default:</strong></p>
+	<p style="margin-left: 80px;">默认值,如果在插入记录时，没有为该字段赋值,系统将自动赋予该字段默认值。</p>
 
-	<p style="margin-left:10.5pt;">默认值,如果在插入记录时，没有为该字段赋值,系统将自动赋予该字段默认值。</p>
+	<p style="margin-left: 80px;"><strong>auto_increment:</strong></p>
 
-	<p style="margin-left:10.5pt;"><strong>auto_increment:</strong></p>
+	<p style="margin-left: 80px;">自动编号,其数据类型为数值型(如果为浮点型，其数据类型应写为float(N,0)或double(N,0)),且该字段必须为定义为索引字段。</p>
 
-	<p style="margin-left:10.5pt;">自动编号,其数据类型为数值型(如果为浮点型，其数据类型应写为float(N,0)或double(N,0)),且该字段必须为定义为索引字段。</p>
+	<p style="margin-left: 80px;"><strong>primary key:</strong></p>
 
-	<p style="margin-left:10.5pt;"><strong>primary key:</strong></p>
+	<p style="margin-left: 80px;">&nbsp; 主键约束,可以创建索引,一张数据表只能存在一个主键约束</p>
 
-	<p style="margin-left:10.5pt;">&nbsp; 主键约束,可以创建索引,一张数据表只能存在一个主键约束</p>
+	<p style="margin-left: 80px;">&nbsp; 必须保证记录的唯一性,自动的禁止为空。</p>
 
-	<p style="margin-left:10.5pt;">&nbsp; 必须保证记录的唯一性,自动的禁止为空。</p>
+	<p style="margin-left: 80px;"><strong>unique key:</strong></p>
 
-	<p style="margin-left:10.5pt;"><strong>unique key:</strong></p>
+	<p style="margin-left: 80px;">&nbsp; 必须保证记录的唯一性。</p>
 
-	<p style="margin-left:10.5pt;">&nbsp; 必须保证记录的唯一性。</p>
+	<p style="margin-left: 80px;">&nbsp; 唯一约束,可以创建索引,一张数据表可以存在多个唯一约束</p>
 
-	<p style="margin-left:10.5pt;">&nbsp; 唯一约束,可以创建索引,一张数据表可以存在多个唯一约束</p>
+	<p style="margin-left: 40px;">说明:</p>
 
-	<p>说明:</p>
+	<p style="margin-left: 40px;">A、在插入记录时，必须为禁止为空且没有默认值的字段赋值。</p>
 
-	<p>A、在插入记录时，必须为禁止为空且没有默认值的字段赋值。</p>
+	<p style="margin-left: 40px;">B、主键约束字段或唯一约束的字段都可以赋值。</p>
 
-	<p>B、主键约束字段或唯一约束的字段都可以赋值。</p>
+	<p style="margin-left: 40px;">C、一般情况下auto_increment与primary key组合使用。</p>
 
-	<p>C、一般情况下auto_increment与primary key组合使用。</p>
-
-	<p>D、自动编号的字段无需赋值。</p>
+	<p style="margin-left: 40px;">D、自动编号的字段无需赋值。</p>
 
 	<h3>2.修改</h3>
-	<p>添加单一字段</p>
+	<p style="margin-left: 40px;">添加单一字段</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 add [column] 列名称 列定义 [first|after 列名称]</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 add [column] 列名称 列定义 [first|after 列名称]</code></p>
 
-	<p>添加多个字段</p>
+	<p style="margin-left: 40px;">添加多个字段</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 add [column] (列名称 列定义,...)</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 add [column] (列名称 列定义,...)</code></p>
 
-	<p>删除字段</p>
+	<p style="margin-left: 40px;">删除字段</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 drop [column] 列名称</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 drop [column] 列名称</code></p>
 
-	<p>添加/删除默认值</p>
+	<p style="margin-left: 40px;">添加/删除默认值</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 alter [column] 列名称 {set default 默认值 | drop default};</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 alter [column] 列名称 {set default 默认值 | drop default};</code></p>
 
-	<p>仅修改列定义</p>
+	<p style="margin-left: 40px;">仅修改列定义</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 modify [column] 列名称 列定义 [first|after 列名称]</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 modify [column] 列名称 列定义 [first|after 列名称]</code></p>
 
-	<p>修改列定义及列名称</p>
+	<p style="margin-left: 40px;">修改列定义及列名称</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 change [column] 旧列名称 新列名称 列定义 [first|after 列名称]</code></p>
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 change [column] 旧列名称 新列名称 列定义 [first|after 列名称]</code></p>
 
-	<p>数据表更名</p>
+	<p style="margin-left: 40px;">数据表更名</p>
 
-	<p style="margin-left: 40px;"><code>alter table 数据表名称 rename [to] 新名称&nbsp;<br />
+	<p style="margin-left: 80px;"><code>alter table 数据表名称 rename [to] 新名称&nbsp;<br />
 	rename table 旧名称 to 新名称,旧名称 to 新名称,...</code></p>
 
   </div>
