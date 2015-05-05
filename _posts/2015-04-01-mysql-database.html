@@ -27,31 +27,42 @@ tags: [mysql]
 	<h3>2.登录<span>/</span>退出<span>MySQL</span></h3>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql -u用户名<span> -p</span>密码<span> -h</span>服务器名称<span> -D</span>数据库名称<span> -P</span>端口</code></p>
-
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;exit; </code>或 <code><span>mysql&gt;quit; </span></code>或 <code><span>mysql&gt;\q;</span></code></p>
-
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明<span>:MySQL</span>命令必须以分号结尾</p>
 
 	<h3>3.常用命令</h3>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前日期时间</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT now();</code></p>
 
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select now();</code></p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前的日期</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT CURDATE();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前的时间</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT CURTIME();</code></p>
+
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">向日期添加指定的时间间隔</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>DATE_ADD(date,INTERVAL expr type);</code></p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">说明:date 参数是合法的日期表达式。expr 参数是您希望添加的时间间隔。type 参数可以是下列值：YEAR(年) DAY(日) HOUR(小时) MINUTE(分钟) SECOND(秒) MICROSECOND(微秒) ... </p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查找中使用了 : SELECT OrderId,DATE_ADD(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前的日期</p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>SELECT CURDATE();</code></p>
+
+
+
+
+
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">当前<span>MySQL</span>版本</p>
-
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select version();</code></p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;SELECT version();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前用户</p>
-
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select user();</code></p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;SELECT user();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前数据库</p>
-
-	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;select database();</code></p>
+	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;SELECT database();</code></p>
 
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;">查看当前服务器下所有的数据库列表</p>
-
 	<p class="MsoNormal" style="margin-left:0cm;text-indent:10.5pt;"><code>mysql&gt;show databases;</code></p>
 
   </div>
