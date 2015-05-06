@@ -94,7 +94,10 @@ tags: [mysql]
 	<div style="padding: 0px; margin: 0px 0px 0px 40px; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; background-color: rgb(255, 255, 255);">&nbsp;</div>
 
 	<div style="padding: 0px; margin: 0px 0px 0px 40px; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; background-color: rgb(255, 255, 255);">那么，如果在firstname、lastname、age这三个列上分别创建单列索引，效果是否和创建一个firstname、lastname、age的多列索引一样呢？答案是否定的，两者完全不同。当我们执行查询的时候，MySQL只能使用一个索引。如果你有三个单列的索引，MySQL会试图选择一个限制最严格的索引。但是，即使是限制最严格的单列索引，它的限制能力也肯定远远低于firstname、lastname、age这三个列上的多列索引。&nbsp;</div>
-
+	<h2 class="blog-post-title">mysql索引的缺点</h2>
+	<p style="margin-left: 40px;">1、创建索引和维护索引要耗费时间，这种时间随着数据量的增加而增加。</p>
+	<p style="margin-left: 40px;">2、索引需要占用物理空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果要建立聚簇索引，需要的空间就会更大。</p>
+	<p style="margin-left: 40px;">3、当对表中 的数据进行增加、删除、修改的时候，索引也要动态的维护，这样就降低了数据的维护速度。</p>
 
 	<h2 class="blog-post-title">mysql索引需要了解的几个注意</h2>
 	<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; vertical-align: baseline; color: rgb(255, 255, 255); background-color: rgb(153, 153, 153); margin-left: 40px;">索引是做什么的?</h2>
