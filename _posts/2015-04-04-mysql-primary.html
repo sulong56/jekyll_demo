@@ -18,8 +18,31 @@ tags: [mysql]
 <div class="col-sm-12 blog-main">
 
   <div class="blog-post">
-	<h2 class="blog-post-title">索引和优化查询</h2>
+	<h2 class="blog-post-title">什么是索引</h2>
+	<p style="margin-left: 80px;">索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍。 </p>
+
+	<h2 class="blog-post-title">索引的类型</h2>
 	<p style="margin-left: 80px;">恰当的索引可以加快查询速度，可以分为四种类型：主键、唯一索引、全文索引、普通索引。</p>
+	<h3 class="blog-post-title" style="margin-left: 40px;">普通索引 :&nbsp;</h3>
+	<p style="margin-left: 40px;">这是最基本的索引类型，而且它没有唯一性之类的限制。普通索引可以通过以下几种方式创建：&nbsp;<br />
+	创建索引，例如<code>CREATE INDEX &lt;索引的名字&gt; ON tablename (列的列表)；</code>&nbsp;<br />
+	修改表，例如<code>ALTER TABLE tablename ADD INDEX [索引的名字] (列的列表)；</code>&nbsp;<br />
+	创建表的时候指定索引，例如<code>CREATE TABLE tablename ( [...], INDEX [索引的名字] (列的列表) )；</code>&nbsp;</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">唯一性索引 :&nbsp;</h3>
+	<p style="margin-left: 40px;">这种索引和前面的&ldquo;普通索引&rdquo;基本相同，但有一个区别：索引列的所有值都只能出现一次，即必须唯一。唯一性索引可以用以下几种方式创建：&nbsp;<br />
+	创建索引，例如<code>CREATE UNIQUE INDEX &lt;索引的名字&gt; ON tablename (列的列表)；&nbsp;</code><br />
+	修改表，例如<code>ALTER TABLE tablename ADD UNIQUE [索引的名字] (列的列表)；&nbsp;</code><br />
+	创建表的时候指定索引，例如<code>CREATE TABLE tablename ( [...], UNIQUE [索引的名字] (列的列表) )；</code>&nbsp;</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">主键 :&nbsp;</h3>
+	<p style="margin-left: 40px;">主键是一种唯一性索引，但它必须指定为&ldquo;<code>PRIMARY KEY</code>&rdquo;。如果你曾经用过<code>AUTO_INCREMENT</code>类型的列，你可能已经熟悉主键之类的概念了。主键一般在创建表的时候指定，例如&ldquo;<code>CREATE TABLE tablename ( [...], PRIMARY KEY (列的列表) );</code> &rdquo;。但是，我们也可以通过修改表的方式加入主键，例如&ldquo;<code>ALTER TABLE tablename ADD PRIMARY KEY (列的列表);</code> &rdquo;。每个表只能有一个主键。</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">全文索引 :&nbsp;</h3>
+	<p style="margin-left: 40px;">MySQL从3.23.23版开始支持全文索引和全文检索。在MySQL中，全文索引的索引类型为FULLTEXT。全文索引可以在VARCHAR或者TEXT类型的列上创建。它可以通过CREATE TABLE命令创建，也可以通过ALTER TABLE或CREATE INDEX命令创建。对于大规模的数据集，通过ALTER TABLE（或者CREATE INDEX）命令创建全文索引要比把记录插入带有全文索引的空表更快。</p>
+
+	<p>&nbsp;</p>
+
 	<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; vertical-align: baseline; color: rgb(255, 255, 255); background-color: rgb(153, 153, 153); margin-left: 40px;">索引是做什么的?</h2>
 
 	<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; vertical-align: baseline; color: rgb(55, 55, 55); background-color: rgb(255, 255, 255); margin-left: 40px;">索引用于快速找出在某个列中有一特定值的行。不使用索引，MySQL必须从第1条记录开始然后读完整个表直到找出相关的行。<br />
