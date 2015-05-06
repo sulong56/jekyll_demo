@@ -18,7 +18,7 @@ tags: [mysql]
 <div class="col-sm-12 blog-main">
 
 <div class="blog-post">
-	<h2 class="blog-post-title">一  什么是存储过程</h2>
+	<h2 class="blog-post-title">一 什么是存储过程</h2>
 
 	<p style="margin-left: 80px;">我们常用的操作数据库语言SQL语句在执行的时候需要要先编译，然后执行，而存储过程（<strong><cite>Stored Procedure</cite></strong>）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。</p>
 
@@ -28,7 +28,7 @@ tags: [mysql]
 
 	<p style="margin-left: 80px;">数据库中的存储过程可以看做是对编程中面向对象方法的模拟。它允许控制数据的访问方式。</p>
 
-	<h2 class="blog-post-title">存储过程的优点</h2>
+	<h2 class="blog-post-title" style="margin-left: 40px;">存储过程的优点</h2>
 
 	<p style="margin-left: 80px;">(1).<strong>存储过程增强了SQL语言的功能和灵活性</strong>。存储过程可以用流控制语句编写，有很强的灵活性，可以完成复杂的判断和较复杂的运算。</p>
 
@@ -41,12 +41,18 @@ tags: [mysql]
 	<p style="margin-left: 80px;">(5).<strong>存储过程可被作为一种安全机制来充分利用</strong>。系统管理员通过执行某一存储过程的权限进行限制，能够实现对相应的数据的访问权限的限制，避免了非授权用户对数据的访问，保证了数据的安全。</p>
 </div>
 
+
 <div class="blog-post">
 	<h2 class="blog-post-title">二 存储过程的创建</h2>
+
 	<p style="margin-left: 80px;">查看创建的存储过程：<code> show create procedure 过程名 </code></p>
+
 	<p style="margin-left: 80px;">修改存储过程：<code> alert procedure 过程名 </code></p>
+
 	<p style="margin-left: 80px;">删除过程：<code> drop procedure 过程名 </code></p>
+
 	<p style="margin-left: 80px;">MySQL中，创建存储过程的基本形式如下：</p>
+
 	<p style="margin-left: 80px;">mysql&gt;<code> DELIMITER // </code>&nbsp;<br />
 	mysql&gt; <code>CREATE PROCEDURE proc1(OUT s int) &nbsp;</code><br />
 	&nbsp; &nbsp; -&gt; <code>[characteristic参数]</code><br />
@@ -57,141 +63,233 @@ tags: [mysql]
 	&nbsp; &nbsp; -&gt;<code> // &nbsp;</code><br />
 	mysql&gt; <code>DELIMITER ;&nbsp;</code></p>
 
-	<h3 class="blog-post-title">1 描述</h3>
+	<h3 class="blog-post-title" style="margin-left: 40px;">1 描述</h3>
+
 	<p style="margin-left: 80px;"><strong>1.</strong>DELIMITER是分割符的意思，因为MySQL默认以&quot;;&quot;为分隔符，如果我们没有声明分割符，那么编译器会把存储过程当成SQL语句进行处理，则存储过程的编译过程会报错，所以要事先用DELIMITER关键字申明当前段分隔符，这样MySQL才会将&quot;;&quot;当做存储过程中的代码，不会执行这些代码，用完了之后要把分隔符还原。</p>
+
 	<p style="margin-left: 80px;">如果是用MySQL的Administrator管理工具时，可以直接创建，不再需要声明。</p>
+
 	<p style="margin-left: 80px;"><strong>2.</strong>过程体的开始与结束使用BEGIN与END进行标识。</p>
-	<h3 class="blog-post-title">2 参数</h3>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">2 参数</h3>
+
 	<p style="margin-left: 120px;"><code><strong>CREATE PROCEDURE([[IN |OUT |INOUT ] 参数名 数据类形...])</strong></code></p>
+
 	<p style="margin-left: 80px;">每个参数由3部分组成。这3部分分别是输入输出类型、参数名称和参数类型。</p>
+
 	<p style="margin-left: 80px;"><strong>IN 输入参数: </strong>表示该参数的值必须在调用存储过程时指定，在存储过程中修改该参数的值不能被返回，为默认值</p>
+
 	<p style="margin-left: 80px;"><strong>OUT 输出参数: </strong>该值可在存储过程内部被改变，并可返回</p>
+
 	<p style="margin-left: 80px;"><strong>INOUT 输入输出参数: </strong>调用时指定，并且可被改变和返回</p>
 
-	<h3 class="blog-post-title">3 characteristic参数</h3>
+	<h3 class="blog-post-title" style="margin-left: 40px;">3 characteristic参数</h3>
+
 	<p style="margin-left: 80px;">characteristic参数指定存储函数的特性，该参数的取值与存储过程中的取值是一样的。其取值说明如下：</p>
-	<p style="margin-left: 80px;"><strong>LANGUAGE SQL： </strong>说明routine_body部分是由SQL语言的语句组成，这也是数据库系统默认的语言。 </p>
-	<p style="margin-left: 80px;"><strong>[NOT] DETERMINISTIC： </strong>指明存储过程的执行结果是否是确定的。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出。NOT DETERMINISTIC表示结果是非确定的，相同的输入可能得到不同的输出。默认情况下，结果是非确定的。 </p>
-	<p style="margin-left: 80px;"><strong>{ CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }： </strong>指明子程序使用SQL语句的限制。CONTAINS SQL表示子程序包含SQL语句，但不包含读或写数据的语句；NO SQL表示子程序中不包含SQL语句；READS SQL DATA表示子程序中包含读数据的语句；MODIFIES SQL DATA表示子程序中包含写数据的语句。默认情况下，系统会指定为CONTAINS SQL。 </p>
-	<p style="margin-left: 80px;"><strong>SQL SECURITY { DEFINER | INVOKER }： </strong>指明谁有权限来执行。DEFINER表示只有定义者自己才能够执行；INVOKER表示调用者可以执行。默认情况下，系统指定的权限是DEFINER。 </p>
-	<p style="margin-left: 80px;"><strong>COMMENT 'string'： </strong>注释信息。 </p>
+
+	<p style="margin-left: 80px;"><strong>LANGUAGE SQL： </strong>说明routine_body部分是由SQL语言的语句组成，这也是数据库系统默认的语言。</p>
+
+	<p style="margin-left: 80px;"><strong>[NOT] DETERMINISTIC： </strong>指明存储过程的执行结果是否是确定的。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出。NOT DETERMINISTIC表示结果是非确定的，相同的输入可能得到不同的输出。默认情况下，结果是非确定的。</p>
+
+	<p style="margin-left: 80px;"><strong>{ CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }： </strong>指明子程序使用SQL语句的限制。CONTAINS SQL表示子程序包含SQL语句，但不包含读或写数据的语句；NO SQL表示子程序中不包含SQL语句；READS SQL DATA表示子程序中包含读数据的语句；MODIFIES SQL DATA表示子程序中包含写数据的语句。默认情况下，系统会指定为CONTAINS SQL。</p>
+
+	<p style="margin-left: 80px;"><strong>SQL SECURITY { DEFINER | INVOKER }： </strong>指明谁有权限来执行。DEFINER表示只有定义者自己才能够执行；INVOKER表示调用者可以执行。默认情况下，系统指定的权限是DEFINER。</p>
+
+	<p style="margin-left: 80px;"><strong>COMMENT &#39;string&#39;： </strong>注释信息。</p>
+
 	<p style="margin-left: 80px;"><strong>技巧：</strong>创建存储过程时，系统默认指定CONTAINS SQL，表示存储过程中使用了SQL语句。但是，如果存储过程中没有使用SQL语句，最好设置为NO SQL。而且，存储过程中最好在COMMENT部分对存储过程进行简单的注释，以便以后在阅读存储过程的代码时更加方便。</p>
 
-	<h3 class="blog-post-title">4 变量的使用</h3>
-	<p style="margin-left: 80px;">在存储过程和函数中，可以定义和使用变量。用户可以使用DECLARE关键字来定义变量。然后可以为变量赋值。这些变量的作用范围是BEGIN…END程序段中。</p>
-	<h4 class="blog-post-title"  style="margin-left: 40px;">变量定义</h4>
-	<p style="margin-left: 80px;"><code>DECLARE  var_name[,...]  type  [DEFAULT value] </code></p>
-	<p style="margin-left: 80px;">其中， DECLARE关键字是用来声明变量的；var_name参数是变量的名称，这里可以同时定义多个变量；type参数用来指定变量的类型；DEFAULT value子句将变量默认值设置为value，没有使用DEFAULT子句时，默认值为NULL。。</p>
-	<p style="margin-left: 80px;"><strong>下面定义变量my_sql，数据类型为INT型，默认值为10。代码如下：</strong></p>
-	<p style="margin-left: 80px;"><code>DECLARE  my_sql  INT  DEFAULT 10 ; </code></p>
-	<h4 class="blog-post-title" style="margin-left: 40px;">变量赋值</h4>
-	<p style="margin-left: 80px;"><code>SET  var_name = expr [, var_name = expr] ...  </code></p>
-	<p style="margin-left: 80px;">其中，SET关键字是用来为变量赋值的；var_name参数是变量的名称；expr参数是赋值表达式。一个SET语句可以同时为多个变量赋值，各个变量的赋值语句之间用逗号隔开。</p>
-	<p style="margin-left: 80px;"><strong>【示例】 下面为变量my_sql赋值为30。代码如下：</strong></p>
-	<p style="margin-left: 80px;"><code>SET  my_sql = 30 ;  </code></p>
-	<p style="margin-left: 80px;"><strong>MySQL中还可以使用SELECT…INTO语句为变量赋值。其基本语法如下：</strong></p>
-	<p style="margin-left: 80px;"><code>SELECT  col_name[,…]  INTO  var_name[,…]  </code></p>
-	<p style="margin-left: 80px;"><code>    FROM  table_name  WEHRE  condition </code></p>
-	<p style="margin-left: 80px;">其中，col_name参数表示查询的字段名称；var_name参数是变量的名称；table_name参数指表的名称；condition参数指查询条件。</p>
-	<p style="margin-left: 80px;"><strong>【示例】 下面从employee表中查询id为2的记录，将该记录的d_id值赋给变量my_sql。代码如下：</strong></p>
-	<p style="margin-left: 80px;"><code>SELECT  d_id  INTO  my_sql  </code></p>
-	<p style="margin-left: 80px;"><code>        FROM  employee  WEHRE  id=2 ; </code></p>
+	<h3 class="blog-post-title" style="margin-left: 40px;">4 变量的使用</h3>
 
-	<h3 class="blog-post-title">5 注释</h3>
-	<p style="margin-left: 80px;">MySQL存储过程可使用两种风格的注释  双模杠：--该风格一般用于单行注释</p>
+	<p style="margin-left: 80px;">在存储过程和函数中，可以定义和使用变量。用户可以使用DECLARE关键字来定义变量。然后可以为变量赋值。这些变量的作用范围是BEGIN&hellip;END程序段中。</p>
+
+	<h4 class="blog-post-title" style="margin-left: 40px;">&nbsp; &nbsp; 变量定义</h4>
+
+	<p style="margin-left: 80px;"><code>DECLARE var_name[,...] type [DEFAULT value] </code></p>
+
+	<p style="margin-left: 80px;">其中， DECLARE关键字是用来声明变量的；var_name参数是变量的名称，这里可以同时定义多个变量；type参数用来指定变量的类型；DEFAULT value子句将变量默认值设置为value，没有使用DEFAULT子句时，默认值为NULL。。</p>
+
+	<p style="margin-left: 80px;"><strong>下面定义变量my_sql，数据类型为INT型，默认值为10。代码如下：</strong></p>
+
+	<p style="margin-left: 80px;"><code>DECLARE my_sql INT DEFAULT 10 ; </code></p>
+
+	<h4 class="blog-post-title" style="margin-left: 40px;">&nbsp; &nbsp; 变量赋值</h4>
+
+	<p style="margin-left: 80px;"><code>SET var_name = expr [, var_name = expr] ... </code></p>
+
+	<p style="margin-left: 80px;">其中，SET关键字是用来为变量赋值的；var_name参数是变量的名称；expr参数是赋值表达式。一个SET语句可以同时为多个变量赋值，各个变量的赋值语句之间用逗号隔开。</p>
+
+	<p style="margin-left: 80px;"><strong>【示例】 下面为变量my_sql赋值为30。代码如下：</strong></p>
+
+	<p style="margin-left: 80px;"><code>SET my_sql = 30 ; </code></p>
+
+	<p style="margin-left: 80px;"><strong>MySQL中还可以使用SELECT&hellip;INTO语句为变量赋值。其基本语法如下：</strong></p>
+
+	<p style="margin-left: 80px;"><code>SELECT col_name[,&hellip;] INTO var_name[,&hellip;] </code></p>
+
+	<p style="margin-left: 80px;"><code>FROM table_name WEHRE condition </code></p>
+
+	<p style="margin-left: 80px;">其中，col_name参数表示查询的字段名称；var_name参数是变量的名称；table_name参数指表的名称；condition参数指查询条件。</p>
+
+	<p style="margin-left: 80px;"><strong>【示例】 下面从employee表中查询id为2的记录，将该记录的d_id值赋给变量my_sql。代码如下：</strong></p>
+
+	<p style="margin-left: 80px;"><code>SELECT d_id INTO my_sql </code></p>
+
+	<p style="margin-left: 80px;"><code>FROM employee WEHRE id=2 ; </code></p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">5 注释</h3>
+
+	<p style="margin-left: 80px;">MySQL存储过程可使用两种风格的注释 双模杠：--该风格一般用于单行注释</p>
+
 	<p style="margin-left: 80px;">c风格： 一般用于多行注释</p>
 
-	<h3 class="blog-post-title">6 定义条件和处理程序</h3>
-	<p style="margin-left: 80px;">定义条件和处理程序是事先定义程序执行过程中可能遇到的问题。并且可以在处理程序中定义解决这些问题的办法。这种方式可以提前预测可能出现的问题，并提出解决办法。这样可以增强程序处理问题的能力，避免程序异常停止。MySQL中都是通过DECLARE关键字来定义条件和处理程序。本小节中将详细讲解如何定义条件和处理程序。</p>
-	<h4 class="blog-post-title" style="margin-left: 40px;">定义条件</h4>
-	<p style="margin-left: 80px;">MySQL中可以使用DECLARE关键字来定义条件。其基本语法如下：</p>
-	<p style="margin-left: 80px;"><code>DECLARE  condition_name  CONDITION  FOR  condition_value  </code></p>
-	<p style="margin-left: 80px;"><code>condition_value:  </code></p>
-	<p style="margin-left: 80px;"><code>      SQLSTATE [VALUE] sqlstate_value | mysql_error_code </code></p>
-	<p style="margin-left: 80px;">condition_name参数表示条件的名称；condition_value参数表示条件的类型；sqlstate_value参数和mysql_error_code参数都可以表示MySQL的错误。例如ERROR 1146 (42S02)中，sqlstate_value值是42S02，mysql_error_code值是1146。</p>
-	<p style="margin-left: 80px;"><strong>【示例】 下面定义"ERROR 1146 (42S02)"这个错误，名称为can_not_find。可以用两种不同的方法来定义，代码如下：</strong></p>
-	<p style="margin-left: 80px;">方法一：使用sqlstate_value  </p>
-	<p style="margin-left: 80px;"><code>DECLARE  can_not_find  CONDITION  FOR  SQLSTATE  '42S02' ;  </code></p>
-	<p style="margin-left: 80px;">方法二：使用mysql_error_code  </p>
-	<p style="margin-left: 80px;"><code>DECLARE  can_not_find  CONDITION  FOR  1146 ; </code></p>
+	<h3 class="blog-post-title" style="margin-left: 40px;">6 定义条件和处理程序</h3>
 
-	<h4 class="blog-post-title" style="margin-left: 40px;">定义处理程序</h4>
+	<p style="margin-left: 80px;">定义条件和处理程序是事先定义程序执行过程中可能遇到的问题。并且可以在处理程序中定义解决这些问题的办法。这种方式可以提前预测可能出现的问题，并提出解决办法。这样可以增强程序处理问题的能力，避免程序异常停止。MySQL中都是通过DECLARE关键字来定义条件和处理程序。本小节中将详细讲解如何定义条件和处理程序。</p>
+
+	<h4 class="blog-post-title" style="margin-left: 40px;">&nbsp; &nbsp; 定义条件</h4>
+
+	<p style="margin-left: 80px;">MySQL中可以使用DECLARE关键字来定义条件。其基本语法如下：</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE condition_name CONDITION FOR condition_value </code></p>
+
+	<p style="margin-left: 80px;"><code>condition_value: </code></p>
+
+	<p style="margin-left: 80px;"><code>SQLSTATE [VALUE] sqlstate_value | mysql_error_code </code></p>
+
+	<p style="margin-left: 80px;">condition_name参数表示条件的名称；condition_value参数表示条件的类型；sqlstate_value参数和mysql_error_code参数都可以表示MySQL的错误。例如ERROR 1146 (42S02)中，sqlstate_value值是42S02，mysql_error_code值是1146。</p>
+
+	<p style="margin-left: 80px;"><strong>【示例】 下面定义&quot;ERROR 1146 (42S02)&quot;这个错误，名称为can_not_find。可以用两种不同的方法来定义，代码如下：</strong></p>
+
+	<p style="margin-left: 80px;">方法一：使用sqlstate_value</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE can_not_find CONDITION FOR SQLSTATE &#39;42S02&#39; ; </code></p>
+
+	<p style="margin-left: 80px;">方法二：使用mysql_error_code</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE can_not_find CONDITION FOR 1146 ; </code></p>
+
+	<h4 class="blog-post-title" style="margin-left: 40px;">&nbsp; &nbsp; 定义处理程序</h4>
+
 	<p style="margin-left: 80px;">MySQL中可以使用DECLARE关键字来定义处理程序。其基本语法如下：</p>
+
 	<p style="margin-left: 80px;"><code>DECLARE handler_type HANDLER FOR </code></p>
-	<p style="margin-left: 80px;"><code>condition_value[,...] sp_statement  </code></p>
-	<p style="margin-left: 80px;"><code>handler_type:  </code></p>
-	<p style="margin-left: 80px;"><code>    CONTINUE | EXIT | UNDO  </code></p>
-	<p style="margin-left: 80px;"><code>condition_value:  </code></p>
-	<p style="margin-left: 80px;"><code>    SQLSTATE [VALUE] sqlstate_value |</code></p>
-	<p style="margin-left: 80px;"><code>condition_name  | SQLWARNING  </code></p>
-	<p style="margin-left: 80px;"><code>       | NOT FOUND  | SQLEXCEPTION  | mysql_error_code </code></p>
+
+	<p style="margin-left: 80px;"><code>condition_value[,...] sp_statement </code></p>
+
+	<p style="margin-left: 80px;"><code>handler_type: </code></p>
+
+	<p style="margin-left: 80px;"><code>CONTINUE | EXIT | UNDO </code></p>
+
+	<p style="margin-left: 80px;"><code>condition_value: </code></p>
+
+	<p style="margin-left: 80px;"><code>SQLSTATE [VALUE] sqlstate_value |</code></p>
+
+	<p style="margin-left: 80px;"><code>condition_name | SQLWARNING </code></p>
+
+	<p style="margin-left: 80px;"><code>| NOT FOUND | SQLEXCEPTION | mysql_error_code </code></p>
+
 	<p style="margin-left: 80px;">其中，handler_type参数指明错误的处理方式，该参数有3个取值。这3个取值分别是CONTINUE、EXIT和UNDO。CONTINUE表示遇到错误不进行处理，继续向下执行；EXIT表示遇到错误后马上退出；UNDO表示遇到错误后撤回之前的操作，MySQL中暂时还不支持这种处理方式。</p>
+
 	<p style="margin-left: 80px;">注意：通常情况下，执行过程中遇到错误应该立刻停止执行下面的语句，并且撤回前面的操作。但是，MySQL中现在还不能支持UNDO操作。因此，遇到错误时最好执行EXIT操作。如果事先能够预测错误类型，并且进行相应的处理，那么可以执行CONTINUE操作。</p>
+
 	<p style="margin-left: 80px;">condition_value参数指明错误类型，该参数有6个取值。sqlstate_value和mysql_error_code与条件定义中的是同一个意思。condition_name是DECLARE定义的条件名称。SQLWARNING表示所有以01开头的sqlstate_value值。NOT FOUND表示所有以02开头的sqlstate_value值。SQLEXCEPTION表示所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值。sp_statement表示一些存储过程或函数的执行语句。</p>
 
-	<p style="margin-left: 80px;"><strong>【示例】 下面定义"ERROR 1146 (42S02)"这个错误，名称为can_not_find。可以用两种不同的方法来定义，代码如下：</strong></p>
-	<p style="margin-left: 80px;">方法一：捕获sqlstate_value   </p>
-	<p style="margin-left: 80px;">第一种方法是捕获sqlstate_value值。如果遇到sqlstate_value值为42S02，执行CONTINUE操作，并且输出"CAN NOT FIND"信息。</p>
-	<p style="margin-left: 80px;"><code>DECLARE CONTINUE HANDLER FOR SQLSTATE '42S02'</code></p>
-	<p style="margin-left: 80px;"><code>SET @info='CAN NOT FIND';  </code></p>
-	<p style="margin-left: 80px;">方法二：捕获mysql_error_code  </p>
-	<p style="margin-left: 80px;">第二种方法是捕获mysql_error_code值。如果遇到mysql_error_code值为1146，执行CONTINUE操作，并且输出"CAN NOT FIND"信息。</p>
-	<p style="margin-left: 80px;"><code>DECLARE CONTINUE HANDLER FOR 1146 SET @info='CAN NOT FIND';  </code></p>
-	<p style="margin-left: 80px;">方法三：先定义条件，然后调用  </p>
+	<p style="margin-left: 80px;"><strong>【示例】 下面定义&quot;ERROR 1146 (42S02)&quot;这个错误，名称为can_not_find。可以用两种不同的方法来定义，代码如下：</strong></p>
+
+	<p style="margin-left: 80px;">方法一：捕获sqlstate_value</p>
+
+	<p style="margin-left: 80px;">第一种方法是捕获sqlstate_value值。如果遇到sqlstate_value值为42S02，执行CONTINUE操作，并且输出&quot;CAN NOT FIND&quot;信息。</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE CONTINUE HANDLER FOR SQLSTATE &#39;42S02&#39;</code></p>
+
+	<p style="margin-left: 80px;"><code>SET @info=&#39;CAN NOT FIND&#39;; </code></p>
+
+	<p style="margin-left: 80px;">方法二：捕获mysql_error_code</p>
+
+	<p style="margin-left: 80px;">第二种方法是捕获mysql_error_code值。如果遇到mysql_error_code值为1146，执行CONTINUE操作，并且输出&quot;CAN NOT FIND&quot;信息。</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE CONTINUE HANDLER FOR 1146 SET @info=&#39;CAN NOT FIND&#39;; </code></p>
+
+	<p style="margin-left: 80px;">方法三：先定义条件，然后调用</p>
+
 	<p style="margin-left: 80px;">第三种方法是先定义条件，然后再调用条件。这里先定义can_not_find条件，遇到1146错误就执行CONTINUE操作。</p>
-	<p style="margin-left: 80px;"><code>DECLARE  can_not_find  CONDITION  FOR  1146 ;  </code></p>
+
+	<p style="margin-left: 80px;"><code>DECLARE can_not_find CONDITION FOR 1146 ; </code></p>
+
 	<p style="margin-left: 80px;"><code>DECLARE CONTINUE HANDLER FOR can_not_find SET </code></p>
-	<p style="margin-left: 80px;"><code>@info='CAN NOT FIND';  
-	<p style="margin-left: 80px;">方法四：使用SQLWARNING  </p>
-	<p style="margin-left: 80px;">第四种方法是使用SQLWARNING。SQLWARNING捕获所有以01开头的sqlstate_value值，然后执行EXIT操作，并且输出"ERROR"信息。</p>
-	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR SQLWARNING SET @info='ERROR';  </code></p>
-	<p style="margin-left: 80px;">方法五：使用NOT FOUND  </p>
-	<p style="margin-left: 80px;">第五种方法是使用NOT FOUND。NOT FOUND捕获所有以02开头的sqlstate_value值，然后执行EXIT操作，并且输出"CAN NOT FIND"信息。</p>
-	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR NOT FOUND SET @info='CAN NOT FIND';  </code></p>
-	<p style="margin-left: 80px;">方法六：使用SQLEXCEPTION  </p>
-	<p style="margin-left: 80px;">第六种方法是使用SQLEXCEPTION。SQLEXCEPTION捕获所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值，然后执行EXIT操作，并且输出"ERROR"信息。</p>
-	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info='ERROR'; </code></p>
 
-	<h3 class="blog-post-title">7 MySQL存储过程的控制语句</h3>
+	<p style="margin-left: 80px;"><code>@info=&#39;CAN NOT FIND&#39;; </code></p>
+
+	<p style="margin-left: 80px;">方法四：使用SQLWARNING</p>
+
+	<p style="margin-left: 80px;">第四种方法是使用SQLWARNING。SQLWARNING捕获所有以01开头的sqlstate_value值，然后执行EXIT操作，并且输出&quot;ERROR&quot;信息。</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR SQLWARNING SET @info=&#39;ERROR&#39;; </code></p>
+
+	<p style="margin-left: 80px;">方法五：使用NOT FOUND</p>
+
+	<p style="margin-left: 80px;">第五种方法是使用NOT FOUND。NOT FOUND捕获所有以02开头的sqlstate_value值，然后执行EXIT操作，并且输出&quot;CAN NOT FIND&quot;信息。</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR NOT FOUND SET @info=&#39;CAN NOT FIND&#39;; </code></p>
+
+	<p style="margin-left: 80px;">方法六：使用SQLEXCEPTION</p>
+
+	<p style="margin-left: 80px;">第六种方法是使用SQLEXCEPTION。SQLEXCEPTION捕获所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值，然后执行EXIT操作，并且输出&quot;ERROR&quot;信息。</p>
+
+	<p style="margin-left: 80px;"><code>DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info=&#39;ERROR&#39;; </code></p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">7 MySQL存储过程的控制语句</h3>
+
 	<p style="margin-left: 80px;">(1). 变量作用域</p>
+
 	<p style="margin-left: 80px;">内部的变量在其作用域范围内享有更高的优先权，当执行到end。变量时，内部变量消失，此时已经在其作用域外，变量不再可见了，应为在存储过程外再也不能找到这个申明的变量，但是你可以通过out参数或者将其值指派给会话变量来保存其值。</p>
+
 	<p style="margin-left: 80px;"><code>end; </code></p>
-	<p style="margin-left: 80px;"> (2). 条件语句</p>
-	<h style="margin-left: 80px;">if-then -else语句</p>
+
+	<p style="margin-left: 80px;">(2). 条件语句</p>
+	<h style="margin-left: 80px;">if-then -else语句
 	<p style="margin-left: 80px;"><code>if var=0 then </code></p>
-    <p style="margin-left: 80px;"><code>end if;  </code></p>
+
+	<p style="margin-left: 80px;"><code>end if; </code></p>
+
 	<p style="margin-left: 80px;"><code>if parameter=0 then </code></p>
+
 	<p style="margin-left: 80px;"><code>else </code></p>
-    <p style="margin-left: 80px;"><code>end if;  </code></p>
-	<h style="margin-left: 80px;">case语句： </p>
-    <p style="margin-left: 80px;"><code>case var  </code></p>
-    <p style="margin-left: 80px;"><code>when 0 then  </code></p>
-    <p style="margin-left: 80px;"><code>else   </code></p>
-    <p style="margin-left: 80px;"><code>end case;  </code></p>
-	<p style="margin-left: 80px;"> (3). 循环语句</p>
-	<h style="margin-left: 80px;"> while ···· end while：</p>
-	<p style="margin-left: 80px;"><code>while var=6 do  </code></p>
-	<p style="margin-left: 80px;"><code>end while; </code></p> 
-	<h style="margin-left: 80px;">repeat···· end repeat：</p>
-	<h style="margin-left: 80px;">它在执行操作后检查结果，而while则是执行前进行检查。</p>
-	<p style="margin-left: 80px;"><code>repeat  </code></p>
+
+	<p style="margin-left: 80px;"><code>end if; </code></p>
+	<h style="margin-left: 80px;">case语句：
+	<p style="margin-left: 80px;"><code>case var </code></p>
+
+	<p style="margin-left: 80px;"><code>when 0 then </code></p>
+
+	<p style="margin-left: 80px;"><code>else </code></p>
+
+	<p style="margin-left: 80px;"><code>end case; </code></p>
+
+	<p style="margin-left: 80px;">(3). 循环语句</p>
+	<h style="margin-left: 80px;"> while &middot;&middot;&middot;&middot; end while：
+	<p style="margin-left: 80px;"><code>while var=6 do </code></p>
+
+	<p style="margin-left: 80px;"><code>end while; </code></p>
+
+	<p><h style="margin-left: 80px;">repeat&middot;&middot;&middot;&middot; end repeat：&nbsp;</h></p>
+
+	<p><h style="margin-left: 80px;"></h>它在执行操作后检查结果，而while则是执行前进行检查。</p>
+
+	<p style="margin-left: 80px;"><code>repeat </code></p>
+
 	<p style="margin-left: 80px;"><code>end repeat; </code></p>
-	<h style="margin-left: 80px;"> loop ·····end loop:</p>
-	<h style="margin-left: 80px;">loop循环不需要初始条件，这点和while 循环相似，同时和repeat循环一样不需要结束条件, leave语句的意义是离开循环。</p>
-	<p style="margin-left: 80px;"><code>LOOP_LABLE:loop  </code></p>
-	<p style="margin-left: 80px;"><code>leave LOOP_LABLE;  </code></p>
 
+	<p><h style="margin-left: 80px;"> loop &middot;&middot;&middot;&middot;&middot;end loop:&nbsp;</h></p>
 
+	<p><h style="margin-left: 80px;"></h>loop循环不需要初始条件，这点和while 循环相似，同时和repeat循环一样不需要结束条件, leave语句的意义是离开循环。</p>
+
+	<p style="margin-left: 80px;"><code>LOOP_LABLE:loop </code></p>
+
+	<p style="margin-left: 80px;"><code>leave LOOP_LABLE; </code></p>
+	</h></h></h>
 </div>
-
-
-
-
-
-
-
-
-
 
 </div>
 </div>
