@@ -1,0 +1,147 @@
+---
+layout: default
+title: MYSQL 事务
+description: mysql 事务
+keywords: 事务
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL 事务</h1>
+<p class="lead blog-description">事务的详细介绍</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+
+<div class="col-sm-12 blog-main">
+
+<div class="blog-post">
+	<h2 class="blog-post-title">事务的概念</h2>
+
+	<p style="margin-left: 80px;">只有InnoDB支持事务</p>
+
+	<p style="margin-left: 80px;">一个事务是一个连续的一组数据库操作，就好像它是一个单一的工作单元进行。换言之，永远不会是完整的事务，除非该组内的每个单独的操作是成功的。如果在事务的任何操作失败，则整个事务将失败。</p>
+
+	<p style="margin-left: 80px;">实际上，会将许多SQL查询到一个组中，将执行所有的人都一起作为事务的一部分。</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">事务的特性</h3>
+
+	<p style="margin-left: 80px;">事务有以下四个标准属性的缩写ACID，通常被称为：</p>
+
+	<p style="margin-left: 80px;">原子性（atomicity）原子性是指整个数据库事务是不可分割的工作单位</p>
+
+	<p style="margin-left: 80px;">一致性（consistency）一致性指事务将数据库从一种状态转变为下一种一致的状态。在事务开始之前和事务结束之后，数据库的完整性约束没有被破坏。</p>
+
+	<p style="margin-left: 80px;">隔离性（isolation）一个事务的影响在该事务提交之前对其他事务都不可见------这通过锁来实现</p>
+
+	<p style="margin-left: 80px;">持久性（durability）事务一旦提交，其结果就是永久性的</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">事务的实现</h3>
+
+	<p style="margin-left: 80px;">隔离性通过Mysql InnoDB锁就可以实现，</p>
+
+	<p style="margin-left: 80px;">原子性、一致性、持久性通过数据库的redo和undo来完成</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">COMMIT &amp; ROLLBACK:</h3>
+
+	<p style="margin-left: 80px;">这两个关键字提交和回滚主要用于MySQL的事务。</p>
+
+	<p style="margin-left: 80px;">当一个成功的事务完成后，发出COMMIT命令应使所有参与表的更改才会生效。</p>
+
+	<p style="margin-left: 80px;">如果发生故障时，应发出一个ROLLBACK命令返回的事务中引用的每一个表到以前的状态。</p>
+
+	<p style="margin-left: 80px;">可以控制的事务行为称为AUTOCOMMIT设置会话变量。如果AUTOCOMMIT设置为1（默认值），然后每一个SQL语句（在事务与否）被认为是一个完整的事务，并承诺在默认情况下，当它完成。 AUTOCOMMIT设置为0时，发出SET AUTOCOMMIT =0命令，在随后的一系列语句的作用就像一个事务，直到一个明确的COMMIT语句时，没有活动的提交。</p>
+
+	<p style="margin-left: 80px;">可以通过使用mysql_query()函数在PHP中执行这些SQL命令。</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">通用事务例子</h3>
+
+	<p style="margin-left: 80px;">这一系列事件是独立于所使用的编程语言，可以建立在任何使用的语言来创建应用程序的逻辑路径。可以通过使用mysql_query()函数在PHP中执行这些SQL命令。</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">对于事务操作的统计</h3>
+
+	<p style="margin-left: 80px;">QPS:question per second，每秒请求数</p>
+
+	<p style="margin-left: 80px;">TPS:transaction per second，每秒事务处理的能力</p>
+
+	<p style="margin-left: 80px;">计算TPS的方法是（com_commit+com_rollback）/time，用这种方法的前提是，所有的事务必须都是显式提交的。</p>
+
+	<h3 class="blog-post-title" style="margin-left: 40px;">事务的隔离级别</h3>
+
+	<p style="margin-left: 80px;">SQL标准定义的四个隔离级别为：</p>
+
+	<p style="margin-left: 80px;">1、READ UNCOMMITED 可以看到未提交的数据（脏读），举个例子：别人说的话你都相信了，但是可能他只是说说，并不实际做。</p>
+
+	<p style="margin-left: 80px;">2、READ COMMITED 读取提交的数据。但是，可能多次读取的数据结果不一致（不可重复读，幻读）。用读写的观点就是：读取的行数据，可以写。</p>
+
+	<p style="margin-left: 80px;">3、REPEATABLE READ (MySQL默认隔离级别) 可以重复读取，但有幻读。读写观点：读取的数据行不可写，但是可以往表中新增数据。在MySQL中，其他事务新增的数据，看不到，不会产生幻读。采用多版本并发控制（MVCC）机制解决幻读问题。</p>
+
+	<p style="margin-left: 80px;">4、SERIALIZABLE 可读，不可写。像java中的锁，写数据必须等待另一个事务结束。</p>
+	&nbsp;
+
+	<p style="margin-left: 80px;">查看当前会话的事务隔离级别</p>
+
+	<p style="margin-left: 80px;"><code>select @@tx_isolation;</code></p>
+
+	<p style="margin-left: 80px;">查看系统当前隔离级别</p>
+
+	<p style="margin-left: 80px;"><code>select @@global.tx_isolation;</code></p>
+
+	<p style="margin-left: 80px;">设置当前会话隔离级别</p>
+
+	<p style="margin-left: 80px;"><code>set session transaction isolatin level repeatable read;</code></p>
+
+	<p style="margin-left: 80px;">设置系统当前隔离级别</p>
+
+	<p style="margin-left: 80px;"><code>set global transaction isolation level repeatable read;</code></p>
+	&nbsp;
+
+	<p style="margin-left: 80px;">在SERIALIZBLE的事务隔离级别，InnoDB存储引擎会对每个SELECT语句后自动加上LOCK IN SHARE MODE，即给每个读取操作加一个共享锁，因此在这个事务隔离级别下，读占用锁了，一致性的非锁定读不再予以支持，一般不再本地事务中使用SERIALIZBLE的隔离级别，SERIALIZABLE的事务隔离级别主要用于InnoDB存储引擎的分布式事务。</p>
+	&nbsp;
+
+	<p style="margin-left: 80px;">在READ COMMITED的事务隔离级别下，除了唯一性的约束检查以及外键约束的检查需要Gap Lock，InnoDB存储引擎不会使用Gap Lock的锁算法。</p>
+	&nbsp;
+
+	<p style="margin-left: 80px;">在默认配置下，mysql数据库总是自动提交的。</p>
+</div>
+
+<div class="blog-post">
+	<h2 class="blog-post-title">事务的使用</h2>
+	<p style="margin-left: 80px;">开启事务</p>
+	<p style="margin-left: 80px;"><code>START TRANSACTION</code> 或 <code>BEGIN</code></p>
+	<p style="margin-left: 80px;">提交事务（关闭事务）</p>
+	<p style="margin-left: 80px;"><code>COMMIT</code></p>
+	<p style="margin-left: 80px;">放弃事务（关闭事务）</p>
+	<p style="margin-left: 80px;"><code>ROLLBACK</code></p>
+	<br/><p style="margin-left: 80px;">发生在折返点 adqoo_1 之前的事务被提交，之后的被忽略</p>
+	<p style="margin-left: 80px;">设置折返点</p>
+	<p style="margin-left: 80px;"><code>SAVEPOINT adqoo_1</code></p>
+	<p style="margin-left: 80px;">自折返点回滚</p>
+	<p style="margin-left: 80px;"><code>ROLLBACK TO SAVEPOINT adqoo_1</code></p>
+	<br/><p style="margin-left: 80px;">事务的终止</p>
+	<p style="margin-left: 80px;">设置“自动提交”模式</p>
+	<p style="margin-left: 80px;"><code>SET AUTOCOMMIT = 0</code></p>
+	<p style="margin-left: 80px;">每条SQL都是同一个事务的不同命令，之间由 COMMIT 或 ROLLBACK隔开</p>
+	<p style="margin-left: 80px;">掉线后，没有 COMMIT 的事务都被放弃</p>
+	<br/><p style="margin-left: 80px;">事务锁定模式	</p>
+	<p style="margin-left: 80px;">系统默认： 不需要等待某事务结束，可直接查询到结果，但不能再进行修改、删除。</p>
+	<p style="margin-left: 80px;">缺点：查询到的结果，可能是已经过期的。</p>
+	<p style="margin-left: 80px;">优点：不需要等待某事务结束，可直接查询到结果。</p>
+
+	<p style="margin-left: 80px;">需要用以下模式来设定锁定模式</p>
+	<p style="margin-left: 80px;">1、<code>SELECT …… LOCK IN SHARE MODE</code>（共享锁）</p>
+	<p style="margin-left: 80px;">查询到的数据，就是数据库在这一时刻的数据（其他已commit事务的结果，已经反应到这里了）</p>
+	<p style="margin-left: 80px;">SELECT 必须等待，某个事务结束后才能执行</p>
+	<p style="margin-left: 80px;">2、<code>SELECT …… FOR UPDATE</code>（排它锁）</p>
+	<p style="margin-left: 80px;">例如 SELECT * FROM tablename WHERE id&lt;200</p>
+	<p style="margin-left: 80px;">那么id&lt;200的数据，被查询到的数据，都将不能再进行修改、删除、SELECT …… LOCK IN SHARE MODE操作</p>
+	<p style="margin-left: 80px;">一直到此事务结束</p>
+	<p style="margin-left: 80px;">共享锁 和 排它锁 的区别：在于是否阻断其他客户发出的 SELECT …… LOCK IN SHARE MODE命令</p>
+</div>
+
+</div>
+</div>
+
+

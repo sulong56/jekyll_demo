@@ -20,7 +20,9 @@ tags: [mysql]
   <div class="blog-post">
 	<h2 class="blog-post-title">什么是索引</h2>
 	<p style="margin-left: 80px;">索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍。 </p>
-
+	<p style="margin-left: 80px;"> mysql 索引是以文件存储的。如果对表进行增删改,索引文件将同步更新。</p>
+	<p style="margin-left: 80px;"> 删除索引 （慎用，一般用不到）</p>
+	<p style="margin-left: 80px;"> <code> drop index 索引名称 on 表名</code></p>
 	<h2 class="blog-post-title">索引的类型</h2>
 	<p style="margin-left: 80px;">恰当的索引可以加快查询速度，可以分为四种类型：主键、唯一索引、全文索引、普通索引。</p>
 	<h3 class="blog-post-title" style="margin-left: 40px;">普通索引 :&nbsp;</h3>
