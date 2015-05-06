@@ -1,19 +1,20 @@
 ---
 layout: default
-title: MYSQL 视图
-description: mysql 视图
-keywords: 视图
+title: MYSQL 触发器
+description: mysql 触发器
+keywords: 触发器
 category: mysql
 tags: [mysql]
 ---
 
 <div class="blog-header">
-<h1 class="blog-title">MYSQL 视图</h1>
-<p class="lead blog-description">视图的详细介绍</p>
+<h1 class="blog-title">MYSQL 触发器</h1>
+<p class="lead blog-description">触发器的详细介绍</p>
 <p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
 </div>
 
 <div class="row">
+
 <div class="col-sm-12 blog-main">
 
 <div class="blog-post">
@@ -131,6 +132,65 @@ tags: [mysql]
 	<p style="margin-left: 80px;">然后我们再查询视图：<code>select * frm lmj group by cat_id;</code>就能得到我们想要的结果了。</p>
 
 	<p style="margin-left: 80px;">它会先把<code>select cat_id,goods_id,goods_name,shop_price from goods order by cat_id,shop_price desc;</code>这句sql语句取到的结果放到一张临时表，然后我们再从这张临时表查自然能得到我们想要的结果了，而不是合并了再去查。</p>
+</div>
+
+
+<div class="blog-post">
+	<h2 class="blog-post-title">视图的创建语法</h2>
+	<p style="margin-left: 80px;"><code>create [algorithm = merge/temptable/undefined] view 视图名 as select 语句;</code></p>
+	<h2 class="blog-post-title">视图的概念</h2>
+	<p style="margin-left: 80px;">视图是由查询结果形成的一张虚拟表。</p>
+	<p style="margin-left: 80px;">什么时候要用到视图 : 如果某个查询结果出现的非常频繁，也就是，要经常拿这个查询结果来做子查询</p>
+	<br/><p style="margin-left: 80px;">视图的工作机制</p>
+	<p style="margin-left: 80px;">当调用视图的时候，才会执行视图中的sql，进行取数据操作。视图的内容没有存储，而是在视图被引用的时候才派生出数据。这样不会占用空间，由于是即时引用，视图的内容总是与真实表的内容是一致的。</p>
+	<h3 class="blog-post-title">使用视图有什么好处呢</h3>
+	<h4 class="blog-post-title">1 简化查询语句</h4>
+	<p style="margin-left: 80px;">比如：有一张商品表，我们经常要查每个栏目下商品的平均价格</p>
+ 	<p style="margin-left: 80px;"> <code>select cat_id,avg(shop_price) from goods gropy by cat_id;</code></p>
+ 	<p style="margin-left: 80px;"> 这时候我们就可以创建一张视图：</p>
+	<p style="margin-left: 80px;">  <code>create view avgPrice as select cat_id,avg(shop_price) from goods gropy by cat_id;</code></p>
+ 	<p style="margin-left: 80px;"> 创建完，以后我们要查每个栏目的平均价格时，只要这么写</p>
+	<p style="margin-left: 80px;">  <code>select * from avgPrice;就可以了。</code></p>
+	<h4 class="blog-post-title">2 可以进行权限控制</h4>
+ 	<p style="margin-left: 80px;">把表的权限封闭，但是开放相应的视图权限，视图里只开放部分数据列</p>
+ 	<p style="margin-left: 80px;">  比如我们的goods商品表，我们不想让别人看到我们的销售价格，这时候我们就可以把查看商品表的权限封闭，创建一张视图</p>
+ 	<p style="margin-left: 80px;">  <code>create view showGoods as select goods_id,goods_name from goods;</code></p>
+ 	<p style="margin-left: 80px;">  不出现销售价格列就可以了。</p>
+	<h4 class="blog-post-title">3 大数据分表时可以用到</h4>
+ 	<p style="margin-left: 80px;">比如表的行数据超过200万行时，速度就会变慢,可以把一张表的数据拆成4张表来存放,把一张表的数据分散到4张表里，分散的方法有很多，最常用的是id取模来计算,id%4+1=[1,2,3,4],还可以用视图，把四张表形成一张视图 </p>
+ 	<p style="margin-left: 80px;">  <code>create view news as select * from news1 union select * from news2 union ...</code></p>
+	<h4 class="blog-post-title">4 节省空间</h4>
+	<p style="margin-left: 80px;">内容是总是一致的话，那么我们不需要维护视图的内容，维护好真实表的内容，就可以保证视图的完整性了。</p>
+	<h3 class="blog-post-title">视图与表的关系</h3>
+ 	<p style="margin-left: 80px;">视图是表的查询结果，自然表的数据变了，会影响视图的结果。</p>
+ 	<p style="margin-left: 80px;">视图也是一种表，是虚拟表。不能与已有的表(视图)出现重名。</p>
+	<h3 class="blog-post-title">视图的algorithm(运算规则)</h3>
+ 	<p style="margin-left: 80px;">  <code>algorithm = merge/temptable/undefined</code></p>
+	<h4 class="blog-post-title">merge:当引用视图时，引用视图的语句与定义视图的语句合并。</h4>
+ 	<p style="margin-left: 80px;">意味着视图只是一个规则，语句规则，当查询视图时，把查询视图的语句</p>
+ 	<p style="margin-left: 80px;">比如：where...那些与创建时的语句where子句等合并，分析，形成一条select语句。</p>
+ 	<p style="margin-left: 80px;">举个列子：我们先创建一张视图查询所有商品价格大于3000的商品</p>
+ 	<p style="margin-left: 80px;">  <code>create view g2 as select goods_id,goods_name,shop_price from goods where shop_price > 3000;</code></p>
+ 	<p style="margin-left: 80px;">然后我们再查询视图的时候，再加上一个where条件&lt;5000</p>
+ 	<p style="margin-left: 80px;">  <code>select * from g2 where shop_price < 5000</code></p>
+ 	<p style="margin-left: 80px;">这时候它就会把两条语句合并分析最终形成这样一条select语句</p>
+ 	<p style="margin-left: 80px;">  <code>select goods_id,goods_name,shop_price from goods where shop_price > 3000 and shop_price < 5000;</code></p>
+	<h4 class="blog-post-title">temptable:是根据创建语句瞬间创建一张临时表，然后查询视图的语句从该临时表查数据。</h4>
+	<h4 class="blog-post-title">undefined:未定义，自动，让系统帮你选。</h4>
+	<h4 class="blog-post-title">merge 和 temptalbe 有一个显著的区别:</h4>
+ 	<p style="margin-left: 80px;">merge最终去查的还是goods表，而temptable去查的是虚拟表。</p>
+ 	<p style="margin-left: 80px;">举个例子：我们要得到每个栏目下最贵的商品</p>
+ 	<p style="margin-left: 80px;">首先我们创建一张视图查出每个栏目的商品按价格降序排序</p>
+ 	<p style="margin-left: 80px;">  <code>create view lmj as select cat_id,goods_id,goods_name,shop_price from goods order by cat_id,shop_price desc;</code></p>
+ 	<p style="margin-left: 80px;">这时候我们在查询这张视图的时候再对cat_id进行分组是不是就能得到我们想要的结果呢？</p>
+ 	<p style="margin-left: 80px;">  <code>select * from lmj group by cat_id;</code></p>
+ 	<p style="margin-left: 80px;">答案是不能的，因为它把我们的创建视图的语句和查询视图的语句合并成</p>
+ 	<p style="margin-left: 80px;">  <code>select cat_id,goods_id,goods_name,shop_price from goods group by cat_id order by cat_id,shop_price desc;</code></p>
+ 
+ 	<p style="margin-left: 80px;">而如果我们在创建视图的时候指定了它的运算规则为：temptable
+ 	<p style="margin-left: 80px;">  <code>create algorithm=temptable view lmj as select cat_id,goods_id,goods_name,shop_price from goods order by cat_id,shop_price desc;</code></p>
+ 	<p style="margin-left: 80px;">然后我们再查询视图：<code>select * frm lmj group by cat_id;</code>就能得到我们想要的结果了。</p>
+ 	<p style="margin-left: 80px;">它会先把<code>select cat_id,goods_id,goods_name,shop_price from goods order by cat_id,shop_price desc;</code>这句sql语句取到的结果放到一张临时表，然后我们再从这张临时表查自然能得到我们想要的结果了，而不是合并了再去查。</p>
 </div>
 </div>
 </div>
