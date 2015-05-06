@@ -1,0 +1,67 @@
+---
+layout: default
+title: MYSQL 日志
+description: mysql  日志
+keywords:  日志
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL  日志</h1>
+<p class="lead blog-description"> 日志的开启使用</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+<div class="col-sm-12 blog-main">
+
+<div class="blog-post">
+	<h2 class="blog-post-title">日志</h2>
+	<p style="margin-left: 40px;">默认情况下，所有日志创建于mysqld数据目录中。通过刷新日志，你可以强制 mysqld来关闭和重新打开日志文件（或者在某些情况下切换到一个新的日志）。当你执行一个FLUSH LOGS语句或执行mysqladmin flush-logs或mysqladmin refresh时，出现日志刷新</p>
+	<h2 class="blog-post-title">错误日志： -log-err</h2>
+	<p style="margin-left: 40px;">在mysql数据库中，错误日志功能是默认开启的。并且，错误日志无法被禁止。默认情况下，错误日志存储在mysql数据库的数据文件中。错误日志文件通常的名称为hostname.err。其中，hostname表示服务器主机名。</p>
+	<p style="margin-left: 40px;">用--log- error[=file_name]选项来指定mysqld保存错误日志文件的位置。如果没有给定file_name值，mysqld使用错误日志名 host_name.err 并在数据目录中写入日志文件。如果你执行FLUSH LOGS，错误日志用-old重新命名后缀并且mysqld创建一个新的空日志文件。(如果未给出--log-error选项，则不会重新命名）。</p>
+	<p style="margin-left: 40px;">如果不指定--log-error，或者(在Windows中)如果你使用--console选项，错误被写入标准错误输出stderr。通常标准输出为你的终端。</p>
+	<h2 class="blog-post-title">查询日志： -log</h2>
+	<p style="margin-left: 40px;">默认情况下查询日志是关闭的。由于查询日志会记录用户的所有操作，其中还包含增删查改等信息，在并发操作大的环境下会产生大量的信息从而导致不必要的磁盘IO，会影响mysql的性能的。如若不是为了调试数据库的目的建议不要开启查询日志。</p>
+	<p style="margin-left: 40px;">用--log[=file_name]或-l [file_name]选项启动它。如果没有给定file_name的值，默认名是host_name.log。</p>
+	<p style="margin-left: 40px;"><code>select * from mysql.general_log;</code></p>
+	<h2 class="blog-post-title">慢查询日志：</h2>
+	<p style="margin-left: 40px;">慢查询日志是用来记录执行时间超过指定时间的查询语句。通过慢查询日志，可以查找出哪些查询语句的执行效率很低，以便进行优化。一般建议开启，它对服务器性能的影响微乎其微，但是可以记录mysql服务器上执行了很长时间的查询语句。可以帮助我们定位性能问题的。</p>
+	<p style="margin-left: 40px;">用--log-slow-queries[=file_name]选项启动时，mysqld 写一个包含所有执行时间超过long_query_time秒的SQL语句的日志文件.如果没有给出file_name值，默认未主机名，后缀为 -slow.log。如果给出了文件名，但不是绝对路径名，文件则写入数据目录。</p>
+	<p style="margin-left: 40px;">时间默认超过多少的称为慢查询日志？</p>
+	<p style="margin-left: 40px;">一般都是通过long_query_time选项来设置这个时间值，时间以秒为单位，可以精确到微秒。如果查询时间超过了这个时间值（默认为10秒），这个查询语句将被记录到慢查询日志中。查看服务器默认时间值方式如下：</p>
+	<p style="margin-left: 40px;"><code>SHOW  GLOBAL VARIABLES LIKE 'long%';</code></p>
+	<p style="margin-left: 40px;">注释：其中这个慢查询时间并不是只表示语句自身执行超过10秒还包含由于其他资源被征用造成阻塞的查询执行时间或其他原因等都被记录到慢查询中。所以这个慢查的时长表示从查询开始到查询结束中间包含可能的任何原因所经历的所有时间。</p>
+	<h2 class="blog-post-title">更新日志：</h2>
+	<p style="margin-left: 40px;">用--log-update[=file_name]选项启动,不推荐使用</p>
+
+	<h2 class="blog-post-title">事务日志：</h2>
+	<p style="margin-left: 40px;">事务日志（InnoDB特有的日志）可以帮助提高事务的效率。使用事务日志，存储引擎在修改表的数据时只需要修改其内存拷贝，再把改修改行为记录到持久在硬盘上的事务日志中，而不用每次都将修改的数据本身持久到磁盘。事务日志采用追加的方式，因此写日志的操作是磁盘上一小块区域内的顺序I/O，而不像随机I/O需要在磁盘的多个地方移动磁头，所以采用事务日志的方式相对来说要快得多。事务日志持久以后，内存中被修改的数据在后台可以慢慢的刷回到磁盘。目前大多数的存储引擎都是这样实现的，我们通常称之为预写式日志，修改数据需要写两次磁盘。</p>
+	<p style="margin-left: 40px;">如果数据的修改已经记录到事务日志并持久化，但数据本身还没有写回磁盘，此时系统崩溃，存储引擎在重启时能够自动恢复这部分修改的数据。具有的恢复方式则视存储引擎而定。</p>
+	<p style="margin-left: 40px;"><code>SHOWGLOBAL VARIABLES LIKE '%log%';</code></p>
+	<p style="margin-left: 40px;">| innodb_flush_log_at_trx_commit          | 1        #在事务提交时innodb是否同步日志从缓冲到文件中1表示事务以提交就同步不提交每隔一秒同步一次，性能会很差造成大量的磁盘I/O；定义为2表示只有在事务提交时才会同步但是可能会丢失整个事务      |</p>
+	<p style="margin-left: 40px;">| innodb_log_files_in_group               | 2      #至少有两个                |</p>
+	<p style="margin-left: 40px;">|innodb_log_group_home_dir               |./      #定义innodb事务日志组的位置       |</p>
+	<p style="margin-left: 40px;">|innodb_mirrored_log_groups              |1    #表示对日志组做镜像          |</p>
+	<h2 class="blog-post-title">二进制日志：</h2>
+	<p style="margin-left: 40px;">二进制日志也叫作变更日志，主要用于记录修改数据或有可能引起数据改变的mysql语句，并且记录了语句发生时间、执行时长、操作的数据等等。所以说通过二进制日志可以查询mysql数据库中进行了哪些变化。一般大小体积上限为1G。</p>
+	<p style="margin-left: 40px;"><code>showglobal variables like "%log_bin%";</code></p>
+	<p style="margin-left: 40px;">log_bin可以直接定义为文件路径，也可以为ON|OFF。</p>
+	<p style="margin-left: 40px;">通过编辑my.cnf中的log-bin选项可以开启二进制日志</p>
+	<p style="margin-left: 40px;">显示二进制日志数目</p>
+	<p style="margin-left: 40px;"><code>show master logs;</code></p>
+	<p style="margin-left: 40px;">看二进制日志文件用mysqlbinlog</p>
+	<p style="margin-left: 40px;"><code>mysqlbinlog mail-bin.000001</code></p>
+
+	<p>&nbsp;</p>
+
+	<p style="margin-left: 80px;">文章参考: <a href="http://www.cnblogs.com/wangkongming/p/3684950.html">mysql日志详细解析http://www.cnblogs.com/wangkongming/p/3684950.html</a></p>
+</div>
+
+
+</div>
+</div>
+
+
