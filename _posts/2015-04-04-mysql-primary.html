@@ -1,0 +1,36 @@
+---
+layout: default
+title: MYSQL 索引
+description: mysql 索引
+keywords: 索引
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL 索引</h1>
+<p class="lead blog-description">索引的分类使用</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+
+<div class="col-sm-12 blog-main">
+
+  <div class="blog-post">
+	<h2 class="blog-post-title">索引和优化查询</h2>
+	<p style="margin-left: 80px;">恰当的索引可以加快查询速度，可以分为四种类型：主键、唯一索引、全文索引、普通索引。</p>
+	<h3 style="margin-left: 40px;">A.单表删除</h3>
+	<p style="margin-left: 80px;">&nbsp; delete from 数据表&nbsp;[where&nbsp;条件]</p>
+	<p style="margin-left: 80px;">&nbsp; [order by 排序字段[asc|desc][,...]]</p>
+	<p style="margin-left: 80px;">&nbsp; [limit 限制记录数目]</p>
+	<h3 style="margin-left: 40px;">B.多表删除</h3>
+	<p style="margin-left: 80px;">&nbsp; delete 数据表,... from&nbsp;数据表参照&nbsp;[where&nbsp;条件]</p>
+
+	<br/><p style="margin-left: 80px;">使用<code>TRUNCATE table_name</code>删除的表不能够回滚，但删除速度较快，</p>
+	<p style="margin-left: 80px;">使用<code>DELETE FROM table_name</code>删除的表可以回滚，删除速度相对较慢。</p>
+  </div>
+</div>
+</div>
+
+
