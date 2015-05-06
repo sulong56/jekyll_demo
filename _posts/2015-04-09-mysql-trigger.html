@@ -1,0 +1,117 @@
+---
+layout: default
+title: MYSQL 触发器
+description: mysql 触发器
+keywords: 触发器
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL 触发器</h1>
+<p class="lead blog-description">触发器的详细介绍</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+<div class="col-sm-12 blog-main">
+
+<div class="blog-post">
+	<h2 class="blog-post-title">查看新建的触发器</h2>
+
+	<p style="margin-left: 40px;"><code>SHOW TRIGGERS;</code></p>
+
+	<h2 class="blog-post-title">触发器的删除</h2>
+
+	<p style="margin-left: 40px;"><code>drop trigger 触发器名称;</code></p>
+
+	<h2 class="blog-post-title">触发器不可修改</h2>
+
+	<h2 class="blog-post-title">触发器的概念</h2>
+
+	<p style="margin-left: 40px;">触发器(trigger)：监视某种情况，并触发某种操作。</p>
+
+	<p style="margin-left: 40px;">触发程序是与表有关的命名数据库对象，当表上出现特定事件时，将激活该对象</p>
+
+	<h2 class="blog-post-title">触发器的创建语法</h2>
+
+	<p style="margin-left: 40px;">触发器创建语法四要素：1.<span style="color:#FF0000;">监视地点(table)</span>&nbsp;2.<span style="color:#FF00FF;">监视事件(insert/update/delete)&nbsp;</span>3.<span style="color:#4C33E5;">触发时间(after/before)</span>&nbsp;4.<span style="color:#008000;">触发事件(insert/update/delete)</span></p>
+
+	<p style="margin-left: 40px;">语法：</p>
+
+	<p style="margin-left: 40px;">create trigger triggerName</p>
+
+	<p style="margin-left: 40px;"><span style="color:#4C33E5;">after/before</span>&nbsp;<span style="color:#FF00FF;">insert/update/delete</span>&nbsp;on&nbsp;<span style="color:#FF0000;">表名</span></p>
+
+	<p style="margin-left: 40px;"><span style="color:#FF0000;"><span style="color:#000000;">for each row &nbsp;&nbsp;#这句话在mysql是固定的</span></span></p>
+
+	<p style="margin-left: 40px;">begin</p>
+
+	<p style="margin-left: 40px;"><span style="color:#008000;">sql语句;</span></p>
+
+	<p style="margin-left: 40px;">end;</p>
+
+	<p style="margin-left: 40px;"><span>注：各自颜色对应上面的四要素。</span></p>
+
+	<h2 class="blog-post-title">after和before的区别</h2>
+
+	<p style="margin-left: 40px;">after是先完成数据的增删改，再触发，触发的语句晚于监视的增删改操作，无法影响前面的增删改动作；也就是说先插入订单记录，再更新商品的数量。</p>
+
+	<p style="margin-left: 40px;">before是先完成触发，再增删改，触发的语句先于监视的增删改，我们就有机会判断，修改即将发生的操作。</p>
+
+	<h2 class="blog-post-title">触发器 与存储过程</h2>
+
+	<p style="margin-left: 40px;">触发程序不能调用将数据返回客户端的存储程序，也不能使用采用CALL语句的动态SQL（允许存储程序通过参数将数据返回触发程序）。</p>
+
+	<p style="margin-left: 40px;">而存储过程 可以接受参数，将结果范围给应用程序</p>
+
+	<h2 class="blog-post-title">如果你在触发器里面对刚刚插入的数据进行了 insert/update, 会造成循环的调用</h2>
+
+	<p style="margin-left: 40px;">如：</p>
+
+	<p style="margin-left: 40px;">create trigger test before update on test for each row update test set NEW.updateTime = NOW() where id=NEW.ID; END</p>
+
+	<p style="margin-left: 40px;">应该使用set：</p>
+
+	<p style="margin-left: 40px;"><code>create trigger test before update on test for each row set NEW.updateTime = NOW(); END</code></p>
+
+	<h2 class="blog-post-title">简单例子</h2>
+
+	<div style="margin-left: 40px;"><code>create table t1(</code></div>
+
+	<div style="margin-left: 40px;"><code>id int auto_increment primary key,</code></div>
+
+	<div style="margin-left: 40px;"><code>name varchar(50)</code></div>
+
+	<div style="margin-left: 40px;"><code>)</code></div>
+
+	<div style="margin-left: 40px;"><code>insert into t1(name) values(&quot;zhangsan&quot;);</code></div>
+
+	<div style="margin-left: 40px;"><code>insert into t1(name) values(&quot;lisi&quot;);</code></div>
+
+	<div style="margin-left: 40px;">&nbsp;</div>
+
+	<div style="margin-left: 40px;"><code>create table t2(</code></div>
+
+	<div style="margin-left: 40px;"><code>id int auto_increment primary key,</code></div>
+
+	<div style="margin-left: 40px;"><code>name varchar(50)</code></div>
+
+	<div style="margin-left: 40px;"><code>)</code></div>
+
+	<div style="margin-left: 40px;"><code>insert into t2(name) values(&quot;zhangxiaosan&quot;);</code></div>
+
+	<div style="margin-left: 40px;"><code>insert into t2(name) values(&quot;lixiaosi&quot;);</code></div>
+
+	<div style="margin-left: 40px;">&nbsp;</div>
+
+	<div style="margin-left: 40px;"><code>create trigger t1InsertT2 before insert on t1 for each row insert into t2(name) values(&quot;zhangxiaosan&quot;);</code></div>
+
+	<div style="margin-left: 40px;"><code>create trigger delT1andT2 after delete on t1 for each row delete from t2 where id=1;</code></div>
+
+	<p style="margin-left: 40px;">在 t1 表进行删除 操作之后，对t2表也进行 删除。</p>
+</div>
+</div>
+</div>
+
+
