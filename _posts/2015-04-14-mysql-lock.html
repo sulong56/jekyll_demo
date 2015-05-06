@@ -1,0 +1,157 @@
+---
+layout: default
+title: MYSQL 锁表
+description: mysql 锁表
+keywords: 锁表
+category: mysql
+tags: [mysql]
+---
+
+<div class="blog-header">
+<h1 class="blog-title">MYSQL 锁表</h1>
+<p class="lead blog-description">MYSQL锁表的详细信息</p>
+<p class="blog-post-meta">{{ page.date | date:"%Y-%m-%d" }} by <a href="#">su</a></p>
+</div>
+
+<div class="row">
+<div class="col-sm-12 blog-main">
+
+<div class="blog-post">
+	<h2 class="blog-post-title">锁表</h2>
+
+	<p style="margin-left: 40px;">页级的典型代表引擎为BDB。</p>
+
+	<p style="margin-left: 40px;">表级的典型代表引擎为MyISAM,MEMORY以及很久以前的ISAM。理解为锁住整个表，可以同时读，写不行</p>
+
+	<p style="margin-left: 40px;">行级的典型代表引擎为INNODB。 单独的一行记录加锁</p>
+
+	<p style="margin-left: 40px;">-我们实际应用中用的最多的就是行锁。</p>
+
+	<h2 class="blog-post-title">行锁的优点缺点</h2>
+
+	<p style="margin-left: 40px;">行级锁的优点如下：</p>
+
+	<p style="margin-left: 40px;">1）、当很多连接分别进行不同的查询时减小LOCK状态。</p>
+
+	<p style="margin-left: 40px;">2）、如果出现异常，可以减少数据的丢失。因为一次可以只回滚一行或者几行少量的数据。</p>
+
+	<p style="margin-left: 40px;">行级锁的缺点如下：</p>
+
+	<p style="margin-left: 40px;">1）、比页级锁和表级锁要占用更多的内存。</p>
+
+	<p style="margin-left: 40px;">2）、进行查询时比页级锁和表级锁需要的I/O要多，所以我们经常把行级锁用在写操作而不是读操作。</p>
+
+	<p style="margin-left: 40px;">3）、容易出现死锁。</p>
+
+	<p style="margin-left: 40px;"><strong>对于写锁定如下： </strong></p>
+
+	<p style="margin-left: 40px;">1）、如果表没有加锁，那么对其加写锁定。</p>
+
+	<p style="margin-left: 40px;">2）、否则，那么把请求放入写锁队列中。</p>
+
+	<p style="margin-left: 40px;"><strong>对于读锁定如下：</strong></p>
+
+	<p style="margin-left: 40px;">1）、如果表没有加写锁，那么加一个读锁。</p>
+
+	<p style="margin-left: 40px;">2）、否则，那么把请求放到读锁队列中。</p>
+	&nbsp;
+
+	<p style="margin-left: 40px;">InnoDB 使用行级锁，BDB 使用页级锁。对于 InnoDB 和 BDB 存储引擎来说，是可能产生死锁的。这是因为 InnoDB 会自动捕获行锁，BDB 会在执行 SQL 语句时捕获页锁的，而不是在事务的开始就这么做。</p>
+	&nbsp;
+
+	<h2 class="blog-post-title">在以下情况下，表锁定优先于页级或行级锁定：</h2>
+
+	<p style="margin-left: 40px;">对严格的关键字进行读取和更新，你可以更新或删除可以用单一的读取的关键字来提取的一行：</p>
+
+	<p style="margin-left: 40px;">SELECT 结合并行的INSERT 语句，并且只有很少的UPDATE或 DELETE 语句。</p>
+
+	<p style="margin-left: 40px;">在整个表上有许多扫描或 GROUP BY 操作，没有任何写操作。</p>
+
+	<h2 class="blog-post-title">表锁</h2>
+
+	<p style="margin-left: 40px;">MySQL表级锁有两种模式：表共享读锁（Table Read Lock）和表独占写锁（Table Write Lock）。</p>
+
+	<p style="margin-left: 40px;">什么意思呢，就是说对MyISAM表进行读操作时，它不会阻塞其他用户对同一表的读请求，但会阻塞 对同一表的写操作；而对MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作。</p>
+
+	<p style="margin-left: 40px;">MyISAM表的读和写是串行的，即在进行读操作时不能进行写操作，反之也是一样。但在一定条件下MyISAM表也支持查询和插入的操作的并发进行，其机制是通过控制一个系统变量（concurrent_insert）来进行的，当其值设置为0时，不允许并发插入；当其值设置为1 时，如果MyISAM表中没有空洞（即表中没有被删除的行），MyISAM允许在一个进程读表的同时，另一个进程从表尾插入记录；当其值设置为2时，无论MyISAM表中有没有空洞，都允许在表尾并发插入记录。</p>
+
+	<h3 class="blog-post-title">&nbsp; &nbsp; MyISAM锁调度的如何实现的</h3>
+
+	<p style="margin-left: 40px;">例如，当一个进程请求某个MyISAM表的读锁，同时另一个进程也请求同一表的写锁，此时MySQL将会如优先处理进程呢？通过研究表明，写进程将先获得锁（即使读请求先到锁等待队列）。但这也造成一个很大的缺陷，即大量的写操作会造成查询操作很难获得读锁，从而可能造成永远阻塞。所幸我们可以通过一些设置来调节MyISAM的调度行为。我们可通过指定参数low-priority-updates，使MyISAM默认引擎给予读请求以优先的权利，设置其值为1（set low_priority_updates=1),使优先级降低。</p>
+
+	<h3 class="blog-post-title">&nbsp; &nbsp;表锁范例：</h3>
+
+	<p style="margin-left: 40px;">如果想要在一个表上做大量的 INSERT 和 SELECT 操作，但是并行的插入却不可能时，可以将记录插入到临时表中，然后定期将临时表中的数据更新到实际的表里。可以用以下命令实现：</p>
+
+	<p style="margin-left: 40px;"><code>LOCK TABLES real_table WRITE, insert_table WRITE;</code></p>
+
+	<p style="margin-left: 40px;"><code>INSERT INTO real_table SELECT * FROM insert_table;</code></p>
+
+	<p style="margin-left: 40px;"><code>TRUNCATE TABLE insert_table;</code></p>
+
+	<p style="margin-left: 40px;"><code>UNLOCK TABLES;</code></p>
+
+	<h2 class="blog-post-title">行锁</h2>
+
+	<h3 class="blog-post-title">&nbsp; &nbsp;注意</h3>
+
+	<p style="margin-left: 40px;">这些语句是在事务中进行的</p>
+
+	<p style="margin-left: 40px;">使用前需开启事务<code>SET AUTOCOMMIT = 0</code>或<code>BEGIN</code></p>
+
+	<p style="margin-left: 40px;">完成<code>COMMIT</code>或<code>ROLLBACK</code></p>
+
+	<h3 class="blog-post-title">&nbsp; &nbsp; InnoDB有两种模式的行锁：</h3>
+
+	<p style="margin-left: 40px;">1）共享锁：允许一个事务去读一行，阻止其他事务获得相同数据集的排他锁。</p>
+
+	<p style="margin-left: 40px;"><code>Select * from table_name where ......lock in share mode</code></p>
+
+	<p style="margin-left: 40px;">2）排他锁：允许获得排他锁的事务更新数据，阻止其他事务取得相同数据集的共享读锁和 排他写锁。</p>
+
+	<p style="margin-left: 40px;"><code>select * from table_name where.....for update</code></p>
+
+	<p style="margin-left: 40px;">为了允许行锁和表锁共存，实现多粒度锁机制；同时还有两种内部使用的意向锁（都是表锁），分别为意向共享锁和意向排他锁。</p>
+
+	<p style="margin-left: 40px;">InnoDB行锁是通过给索引项加锁来实现的，即只有通过索引条件检索数据，InnoDB才使用行级锁，否则将使用表锁！</p>
+	&nbsp;
+
+	<p style="margin-left: 40px;">由于InnoDB预设是Row-Level Lock，所以只有「明确」的指定主键，MySQL才会执行Row lock (只锁住被选取的资料例) ，否则MySQL将会执行Table Lock (将整个资料表单给锁住)。</p>
+
+	<p style="margin-left: 40px;">例1: (明确指定主键，并且有此笔资料，row lock)</p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE id=&#39;3&#39; FOR UPDATE;</code></p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE id=&#39;3&#39; and type=1 FOR UPDATE;</code></p>
+
+	<p style="margin-left: 40px;">例2: (明确指定主键，若查无此笔资料，无lock)</p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE id=&#39;-1&#39; FOR UPDATE;</code></p>
+
+	<p style="margin-left: 40px;">例3: (无主键，table lock)</p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE name=&#39;Mouse&#39; FOR UPDATE;</code></p>
+
+	<p style="margin-left: 40px;">例4: (主键不明确，table lock)</p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE id&lt;&gt;&#39;3&#39; FOR UPDATE;</code></p>
+
+	<p style="margin-left: 40px;">例5: (主键不明确，table lock)</p>
+
+	<p style="margin-left: 40px;"><code>SELECT * FROM products WHERE id LIKE &#39;3&#39; FOR UPDATE;</code></p>
+
+	<h2 class="blog-post-title">&nbsp; 行锁实际使用注意</h2>
+
+	<p style="margin-left: 40px;">（1）在不通过索引条件查询的时候，InnoDB确实使用的是表锁，而不是行锁。</p>
+
+	<p style="margin-left: 40px;">（2）由于MySQL的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然是访问不同行的记录，但是如果是使用相同的索引键，是会出现锁冲突的。应用设计的时候要注意这一点。</p>
+
+	<p style="margin-left: 40px;">（3）当表有多个索引的时候，不同的事务可以使用不同的索引锁定不同的行，另外，不论是使用主键索引、唯一索引或普通索引，InnoDB都会使用行锁来对数据加锁。</p>
+
+	<p style="margin-left: 40px;">（4）即便在条件中使用了索引字段，但是否使用索引来检索数据是由MySQL通过判断不同执行计划的代价来决定的，如果MySQL认为全表扫描效率更高，比如对一些很小的表，它就不会使用索引，这种情况下InnoDB将使用表锁，而不是行锁。因此，在分析锁冲突时，别忘了检查SQL的执行计划，以确认是否真正使用了索引。</p>
+</div>
+
+</div>
+</div>
+
+
