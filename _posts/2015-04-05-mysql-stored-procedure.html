@@ -14,9 +14,7 @@ tags: [mysql]
 </div>
 
 <div class="row">
-
 <div class="col-sm-12 blog-main">
-
 <div class="blog-post">
 	<h2 class="blog-post-title">一 什么是存储过程</h2>
 
@@ -41,7 +39,6 @@ tags: [mysql]
 	<p style="margin-left: 80px;">(5).<strong>存储过程可被作为一种安全机制来充分利用</strong>。系统管理员通过执行某一存储过程的权限进行限制，能够实现对相应的数据的访问权限的限制，避免了非授权用户对数据的访问，保证了数据的安全。</p>
 </div>
 
-
 <div class="blog-post">
 	<h2 class="blog-post-title">二 存储过程的使用</h2>
 
@@ -51,19 +48,58 @@ tags: [mysql]
 
 	<p style="margin-left: 80px;">删除过程：<code> drop procedure 过程名 </code></p>
 
-	<p style="margin-left: 80px;">调用过程：<code> call 过程名(参数);  </code></p>
+	<p style="margin-left: 80px;">调用过程：<code> call 过程名(参数); </code></p>
 
-	<p style="margin-left: 80px;">MySQL中，创建存储过程的基本形式如下：</p>
+	<table align="center" border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+		<tbody>
+			<tr>
+				<td>
+				<p style="margin-left: 80px;">MySQL中，创建存储过程的基本形式如下：</p>
 
-	<p style="margin-left: 80px;">mysql&gt;<code> DELIMITER // </code>&nbsp;<br />
-	mysql&gt; <code>CREATE PROCEDURE proc1(OUT s int) &nbsp;</code><br />
-	&nbsp; &nbsp; -&gt; <code>[characteristic参数]</code><br />
-	&nbsp; &nbsp; -&gt; <code>BEGIN&nbsp;</code><br />
-	&nbsp; &nbsp; -&gt; <code>SELECT COUNT(*) INTO s FROM user; &nbsp;</code><br />
-	&nbsp;&nbsp; &nbsp;过程代码<br />
-	&nbsp; &nbsp; -&gt;<code> END&nbsp;</code><br />
-	&nbsp; &nbsp; -&gt;<code> // &nbsp;</code><br />
-	mysql&gt; <code>DELIMITER ;&nbsp;</code></p>
+				<p style="margin-left: 80px;">mysql&gt;<code>&nbsp;DELIMITER //&nbsp;</code>&nbsp;<br />
+				mysql&gt;&nbsp;<code>CREATE PROCEDURE proc1(OUT s int) &nbsp;</code><br />
+				&nbsp; &nbsp; -&gt;&nbsp;<code>[characteristic参数]</code><br />
+				&nbsp; &nbsp; -&gt;&nbsp;<code>BEGIN&nbsp;</code><br />
+				&nbsp; &nbsp; -&gt;&nbsp;<code>SELECT COUNT(*) INTO s FROM user; &nbsp;</code><br />
+				&nbsp;&nbsp; &nbsp;过程代码<br />
+				&nbsp; &nbsp; -&gt;<code>&nbsp;END&nbsp;</code><br />
+				&nbsp; &nbsp; -&gt;<code>&nbsp;// &nbsp;</code><br />
+				mysql&gt;&nbsp;<code>DELIMITER ;&nbsp;</code></p>
+				</td>
+				<td>
+				<p style="margin-left: 80px;">存储过程的创建语法详细版：</p>
+
+				<p style="margin-left: 80px;"><code>delimiter // &nbsp; &nbsp;-- 声明分隔符(命令结束符)</code><br />
+				<code>create&nbsp;</code><br />
+				<code>&nbsp;definer = user@hostname | current_user&nbsp;<br />
+				&nbsp; procedure 存储过程名 (参数)</code><br />
+				<code>&nbsp;comment &#39;注释&#39;</code><br />
+				<code>&nbsp;sql security definer | invoker &nbsp; -- sql 的安全设置</code><br />
+				<code>begin</code><br />
+				<code>&nbsp; 存储过程的body</code><br />
+				<code>end</code><br />
+				<code>//</code><br />
+				<code>delimiter ; &nbsp; &nbsp;-- 声明分隔符(命令结束符)</code></p>
+				</td>
+				<td>
+				<p style="margin-left: 80px;">函数的创建语句：</p>
+
+				<p><code>delimiter // &nbsp; &nbsp;-- 声明分隔符(命令结束符)</code><br />
+				<code>create</code><br />
+				<code>&nbsp;definer = user@hostname | current_user<br />
+				&nbsp; function 函数名(参数)</code><br />
+				<code>&nbsp;return 返回值类型</code><br />
+				<code>&nbsp;comment &#39;注释&#39;</code><br />
+				<code>&nbsp;sql security definer | invoker &nbsp; -- sql 的安全设置</code><br />
+				<code>begin</code><br />
+				<code>&nbsp; 函数的body</code><br />
+				<code>end</code><br />
+				<code>//</code><br />
+				<code>delimiter ; &nbsp; &nbsp;-- 声明分隔符(命令结束符)</code></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
 	<h3 class="blog-post-title" style="margin-left: 40px;">1 描述</h3>
 
@@ -95,11 +131,49 @@ tags: [mysql]
 
 	<p style="margin-left: 80px;"><strong>{ CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }： </strong>指明子程序使用SQL语句的限制。CONTAINS SQL表示子程序包含SQL语句，但不包含读或写数据的语句；NO SQL表示子程序中不包含SQL语句；READS SQL DATA表示子程序中包含读数据的语句；MODIFIES SQL DATA表示子程序中包含写数据的语句。默认情况下，系统会指定为CONTAINS SQL。</p>
 
-	<p style="margin-left: 80px;"><strong>SQL SECURITY { DEFINER | INVOKER }： </strong>指明谁有权限来执行。DEFINER表示只有定义者自己才能够执行；INVOKER表示调用者可以执行。默认情况下，系统指定的权限是DEFINER。</p>
+	<p style="margin-left: 80px;"><strong>SQL SECURITY { DEFINER | INVOKER }： </strong>指明谁有权限来执行。DEFINER表示只有定义者自己才能够执行；INVOKER表示调用者可以执行。默认情况下，系统指定的权限是DEFINER。默认情况下，使用DEFINER方式，此时调用存储过程的用户必须有存储过程的EXECUTE权限，并且DEFINER指定的用户必须是在mysql.user表中存在的用户。DEFINER模式下，默认DEFINER=CURRENT_USER，在存储过程执行时，mysql会检查DEFINER定义的用户&#39;user_name&#39;@&#39;host_name&#39;的权限；</p>
 
 	<p style="margin-left: 80px;"><strong>COMMENT &#39;string&#39;： </strong>注释信息。</p>
 
 	<p style="margin-left: 80px;"><strong>技巧：</strong>创建存储过程时，系统默认指定CONTAINS SQL，表示存储过程中使用了SQL语句。但是，如果存储过程中没有使用SQL语句，最好设置为NO SQL。而且，存储过程中最好在COMMENT部分对存储过程进行简单的注释，以便以后在阅读存储过程的代码时更加方便。</p>
+
+	<p style="margin-left: 40px;"><span style="font-size: 24.5px; font-weight: bold; line-height: 40px;">注意：</span></p>
+
+	<p class="blog-post-title" style="margin-left: 80px;">在创建时调用的<span style="color: rgb(221, 17, 68); font-family: Monaco, Menlo, Consolas, 'Courier New', monospace; font-size: 12px; white-space: nowrap; background-color: rgb(247, 247, 249);">&nbsp;definer = user@hostname | current_user&nbsp;</span>&nbsp; &nbsp;这里定义下面的<code>DEFINER </code>它的权限，默认是<code>DEFINER=CURRENT_USER </code>当前用户；这条语句设置了存储过程执行时用那个用户权限执行。</p>
+
+	<p style="margin-left: 80px;"><strong>【示例一】</strong><span style="font-family: 宋体; line-height: 28px; text-indent: 2em;">调用存储过程</span></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;">&nbsp;存储过程的调用者是 ：　<code>admin@192.168.1.1</code></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;">&nbsp;存储过程的DEFINER是 &nbsp; ：　<code>admin@%</code></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;">&nbsp;MySQL中存在的用户是　：　<code>admin@192.168.%.%</code></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;"><span style="font-family: 宋体; line-height: 28px; text-indent: 28px;">此时admin@192.168.1.1是可以访问数据库的，因为它符合admin@192.168.%.%的授权规则，但是当它调用DEFINER=&#39;admin@%&#39;的存储过程的时候，mysql会检查mysql.user用户表中是否存在admin@%这个用户，mysql的检查结果是admin@%这个用户不存在，此时就会返回报错，提示&ldquo;Ther user specified as a definer (&#39;admin@%&#39;) does not exist.&rdquo;。</span></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;"><strong>【示例二】</strong>创建存储过程</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;">&nbsp;使用用户<code>admin@192.168.1.1</code>连接mysql，该用户有<code>test</code>库的<code>all privileges</code>，执行创建存储过程的操作：</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;存储过程中定义的DEFINER是 &nbsp; ：　<code>admin@%</code></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MySQL中存在的用户是　：　<code>admin@192.168.%.%</code></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;">&nbsp;此时，会遇到报错，提示&rdquo;ERROR 1227 (42000): Access denied; you need (at least one of) the SUPER privilege(s) for this operation&ldquo;</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;">&nbsp;修复DEFINER=&#39;admin@192.168.%.%&#39;，或者去掉 DEFINER参数，都可以恢复正常。</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;"><strong>说明：</strong></p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 40px;">&nbsp; &nbsp;事例一中是存在问题的，存储过程的调用者和拥有者都是admin@192.168.1.1，但是DEFINER却是admin@%，这是由于创建存储过程的命令是由root用户执行的，所以没有遇到<span style="font-family: 宋体; line-height: 28px; text-indent: 28px;">事例</span>二中的报错。</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px;">&nbsp;</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px;">说明：</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px;">&nbsp; &nbsp;案例一中是存在问题的，存储过程的调用者和拥有者都是admin@192.168.1.1，但是DEFINER却是admin@%，这是由于创建存储过程的命令是由root用户执行的，所以没有遇到案例二中的报错。</p>
+
+	<p style="margin-bottom: 0px; padding: 0px; text-indent: 2em; font-family: 宋体; line-height: 28px; margin-left: 80px;">&nbsp;</p>
 
 	<h3 class="blog-post-title" style="margin-left: 40px;">4 变量的使用</h3>
 
@@ -292,8 +366,8 @@ tags: [mysql]
 	<p style="margin-left: 80px;"><code>leave LOOP_LABLE; </code></p>
 	</h></h></h>
 </div>
+</div>
+</div>
 
-</div>
-</div>
 
 
